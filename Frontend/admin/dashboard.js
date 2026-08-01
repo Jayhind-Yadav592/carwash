@@ -55,9 +55,9 @@ const DashboardState = {
     { id: "RCW-9023", customer: "Venkatesh M.", phone: "9123456789", vehicle: "Innova (AP 07 DE 3344)", service: "Foam Wash + Vacuum", slot: "Today, 01:00 PM", amount: 500, status: "completed", payment_status: "PAID", transaction_id: "TXN-UPI-884102" }
   ],
   services: [
-    { id: 1, title: "Foam & Water Wash", price: 400, duration: "45 mins", image: "../images/car 2.jpeg", description: "Exterior pressure foam wash with tyre shine & window cleaning." },
-    { id: 2, title: "Foam Wash + Interior Vacuum", price: 500, duration: "60 mins", image: "../images/car 3.jpeg", description: "Complete foam wash plus cabin vacuuming and dashboard wipe." },
-    { id: 3, title: "Full Interior & Tyre Polish", price: 600, duration: "75 mins", image: "../images/car 4.jpeg", description: "Deep interior shampooing, seat steam sanitize & premium tyre polish." }
+    { id: 1, title: "Foam & Water Wash", price: 400, duration: "45 mins", image: "../images/car 10.jpeg", description: "Exterior pressure foam wash with tyre shine & window cleaning." },
+    { id: 2, title: "Foam Wash + Interior Vacuum", price: 500, duration: "60 mins", image: "../images/car 12.png", description: "Complete foam wash plus cabin vacuuming and dashboard wipe." },
+    { id: 3, title: "Full Interior & Tyre Polish", price: 600, duration: "75 mins", image: "../images/car 16.png", description: "Deep interior shampooing, seat steam sanitize & premium tyre polish." }
   ],
   customers: [
     { id: 1, name: "Rajesh Kumar", email: "rajesh@example.com", phone: "+91 9876543210", vehicle: "Creta", bookingsCount: 5, loyaltyPoints: 250 },
@@ -515,7 +515,7 @@ function renderServicesGrid() {
   grid.innerHTML = DashboardState.services.map(s => `
     <div class="service-card">
       <div class="service-img-wrapper">
-        <img src="${s.image || '../images/car 2.jpeg'}" alt="${s.title}">
+        <img src="${s.image || '../images/car 10.jpeg'}" alt="${s.title}">
         <div class="service-price-tag">₹${s.price || s.price_rs || 500}</div>
       </div>
       <div class="service-card-body">

@@ -15,91 +15,36 @@ const STORAGE_KEYS = {
 const DEFAULT_SERVICES = [
   {
     id: 'srv-foam-water',
-    title: 'Exterior Foam & Water Wash',
+    title: 'Foam & Water Wash',
     category: 'Doorstep Package 1',
     price: 400,
-    duration: '1.5 Hours',
+    duration: '45 mins',
     description: 'High-pressure foam wash, pressure water rinse, wheel rim cleaning & microfiber hand dry at your doorstep.',
     icon: 'fa-soap',
     badge: 'Standard Wash',
-    image: '../images/car 2.jpeg'
+    image: '../images/car 10.jpeg'
   },
   {
     id: 'srv-foam-vacuum',
-    title: 'Foam Wash + Vacuum Cleaning',
+    title: 'Water & Foam Wash + Vacuum',
     category: 'Doorstep Package 2',
     price: 500,
-    duration: '1.5 Hours',
+    duration: '60 mins',
     description: 'Foam & pressure water exterior wash plus complete cabin & trunk vacuum cleaning.',
     icon: 'fa-sparkles',
     badge: 'Best Value',
-    image: '../images/car 3.jpeg'
+    image: '../images/car 12.png'
   },
   {
     id: 'srv-complete-spa',
-    title: 'Full Spa & Interior Sanitization',
+    title: 'Complete Wash + Vacuum + Interior + Tyre Polish',
     category: 'Doorstep Package 3',
     price: 600,
-    duration: '1.5 Hours',
+    duration: '75 mins',
     description: 'Complete foam & water wash, full interior sanitization, dashboard dressing, seat steam cleaning & deep black tyre polish.',
     icon: 'fa-crown',
     badge: 'Full Spa',
-    image: '../images/car 4.jpeg'
-  },
-  {
-    id: 'srv-exterior-wash',
-    title: 'High-Pressure Exterior Jet Wash',
-    category: 'Exterior Care',
-    price: 350,
-    duration: '1.0 Hour',
-    description: 'Targeted exterior mud removal, high-pressure water jet rinse, and streak-free glass wiping.',
-    icon: 'fa-shower',
-    badge: 'Exterior Only',
-    image: '../images/car 1.jpg'
-  },
-  {
-    id: 'srv-ceramic-coating',
-    title: 'Ceramic Coating & Paint Polish',
-    category: 'Paint Protection',
-    price: 1200,
-    duration: '2.5 Hours',
-    description: 'Premium hydrophobic ceramic wax coating for mirror shine and long-lasting UV paint protection.',
-    icon: 'fa-gem',
-    badge: 'Premium Detailing',
-    image: '../images/car 5.jpeg'
-  },
-  {
-    id: 'srv-engine-cleaning',
-    title: 'Engine Bay & Underbody Jet Cleaning',
-    category: 'Deep Care',
-    price: 450,
-    duration: '1.2 Hours',
-    description: 'High-pressure engine compartment degreasing and underbody mud flush.',
-    icon: 'fa-gears',
-    badge: 'Engine Care',
-    image: '../images/car 6.jpeg'
-  },
-  {
-    id: 'srv-waterless-wash',
-    title: 'Waterless Eco Express Wash',
-    category: 'Eco Wash',
-    price: 300,
-    duration: '45 Mins',
-    description: 'Eco-friendly waterless polymer spray wash and microfiber buffing for quick shine.',
-    icon: 'fa-leaf',
-    badge: 'Eco Friendly',
-    image: '../images/car 7.jpeg'
-  },
-  {
-    id: 'srv-tyre-rim-care',
-    title: 'Wheel Rim & Deep Black Tyre Polish',
-    category: 'Wheel Care',
-    price: 250,
-    duration: '30 Mins',
-    description: 'Brake dust removal, alloy rim polishing, and silicone-based deep black tyre gloss dressing.',
-    icon: 'fa-circle-dot',
-    badge: 'Tyre Care',
-    image: '../images/car 8.jpeg'
+    image: '../images/car 16.png'
   }
 ];
 
@@ -116,26 +61,18 @@ const Store = {
         const results = Array.isArray(data) ? data : (data.results || []);
         if (results.length > 0) {
           const defaultImgs = [
-            '../images/car 2.jpeg',
-            '../images/car 3.jpeg',
-            '../images/car 4.jpeg',
-            '../images/car 1.jpg',
-            '../images/car 5.jpeg',
-            '../images/car 6.jpeg',
-            '../images/car 7.jpeg',
-            '../images/car 8.jpeg'
+            '../images/car 10.jpeg?v=2',
+            '../images/car 12.png?v=2',
+            '../images/car 16.png?v=2'
           ];
           return results.map((s, idx) => {
-            let img = s.image;
-            if (!img || img.trim() === '') {
-              const priceNum = Math.round(parseFloat(s.price || 0));
-              if (priceNum === 400) img = '../images/car 2.jpeg';
-              else if (priceNum === 500) img = '../images/car 3.jpeg';
-              else if (priceNum === 600) img = '../images/car 4.jpeg';
-              else img = defaultImgs[idx % defaultImgs.length];
-            } else if (!img.startsWith('http') && !img.startsWith('../') && !img.startsWith('/')) {
-              img = '../' + img;
-            }
+            const priceNum = Math.round(parseFloat(s.price || 0));
+            let img = '../images/car 10.jpeg?v=2';
+            if (priceNum === 400 || s.id === 'srv-foam-water') img = '../images/car 10.jpeg?v=2';
+            else if (priceNum === 500 || s.id === 'srv-foam-vacuum') img = '../images/car 12.png?v=2';
+            else if (priceNum === 600 || s.id === 'srv-complete-spa') img = '../images/car 16.png?v=2';
+            else img = defaultImgs[idx % defaultImgs.length];
+
             return {
               id: s.id,
               title: s.name,

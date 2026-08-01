@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 from datetime import timedelta
 from decouple import config, Csv
-import dj_database_url
+# import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,28 +90,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'carwash_backend.wsgi.application'
 
 # Database Configuration (PostgreSQL dynamically configured via decouple)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
-#         'NAME': config('DB_NAME', default='carwash_db'),
-#         'USER': config('DB_USER', default='postgres'),
-#         'PASSWORD': config('DB_PASSWORD', default='postgres'),
-#         'HOST': config('DB_HOST', default='localhost'),
-#         'PORT': config('DB_PORT', default='5432'),
-#     }
-# }
 DATABASES = {
-    'default': dj_database_url.config(
-        default=(
-            f"{config('DB_ENGINE', default='django.db.backends.postgresql')}://"
-            f"{config('DB_USER', default='postgres')}:"
-            f"{config('DB_PASSWORD', default='postgres')}@"
-            f"{config('DB_HOST', default='localhost')}:"
-            f"{config('DB_PORT', default='5432')}/"
-            f"{config('DB_NAME', default='carwash_db')}"
-        )
-    )
+    'default': {
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
+        'NAME': config('DB_NAME', default='carwash_db'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='postgres'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
+    }
 }
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=(
+#             f"{config('DB_ENGINE', default='django.db.backends.postgresql')}://"
+#             f"{config('DB_USER', default='postgres')}:"
+#             f"{config('DB_PASSWORD', default='postgres')}@"
+#             f"{config('DB_HOST', default='localhost')}:"
+#             f"{config('DB_PORT', default='5432')}/"
+#             f"{config('DB_NAME', default='carwash_db')}"
+#         )
+#     )
+# }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

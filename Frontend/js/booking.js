@@ -46,38 +46,46 @@ async function initBookingEngine() {
   function renderPackageSelector() {
     if (!pkgContainer) return;
 
+    // Preserve existing manually created HTML cards if present in DOM
+    const existingCards = pkgContainer.querySelectorAll('.booking-pkg-card');
+    if (existingCards && existingCards.length > 0) {
+      existingCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const pkgId = card.getAttribute('data-pkg-id');
+          const match = services.find(s => s.id.toString() === pkgId.toString()) || {
+            id: pkgId,
+            price: parseFloat(card.getAttribute('data-price') || 400)
+          };
+          selectedPackage = match;
+          updateSelectedPackageUI();
+        });
+      });
+      return;
+    }
+
     const fallbackImgs = [
-      '../images/car 2.jpeg',
-      '../images/car 3.jpeg',
-      '../images/car 4.jpeg',
-      '../images/car 1.jpg',
-      '../images/car 5.jpeg',
-      '../images/car 6.jpeg',
-      '../images/car 7.jpeg',
-      '../images/car 8.jpeg'
+      '../images/car 10.jpeg?v=2',
+      '../images/car 12.png?v=2',
+      '../images/car 16.png?v=2'
     ];
 
     pkgContainer.innerHTML = services.map((s, idx) => {
       const isSelected = s.id.toString() === selectedPackage.id.toString();
+      const priceNum = Math.round(parseFloat(s.price || 0));
       
-      let imgSrc = s.image;
-      if (!imgSrc || imgSrc.trim() === '') {
-        const priceNum = Math.round(parseFloat(s.price || 0));
-        if (priceNum === 400) imgSrc = '../images/car 2.jpeg';
-        else if (priceNum === 500) imgSrc = '../images/car 3.jpeg';
-        else if (priceNum === 600) imgSrc = '../images/car 4.jpeg';
-        else imgSrc = fallbackImgs[idx % fallbackImgs.length];
-      } else if (!imgSrc.startsWith('http') && !imgSrc.startsWith('../') && !imgSrc.startsWith('/')) {
-        imgSrc = '../' + imgSrc;
-      }
+      let imgSrc = '../images/car 10.jpeg?v=2';
+      if (priceNum === 400 || s.id === 'srv-foam-water') imgSrc = '../images/car 10.jpeg?v=2';
+      else if (priceNum === 500 || s.id === 'srv-foam-vacuum') imgSrc = '../images/car 12.png?v=2';
+      else if (priceNum === 600 || s.id === 'srv-complete-spa') imgSrc = '../images/car 16.png?v=2';
+      else imgSrc = fallbackImgs[idx % fallbackImgs.length];
 
       const defaultFallback = fallbackImgs[idx % fallbackImgs.length];
 
       return `
         <div class="booking-pkg-card ${isSelected ? 'active-pkg' : ''}" data-pkg-id="${s.id}" data-price="${s.price}">
           <div style="display: flex; flex-direction: column; height: 100%;">
-            <div style="height: 100px; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 0.5rem;">
-              <img src="${imgSrc}" alt="${s.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='${defaultFallback}';">
+            <div style="aspect-ratio: 16 / 9; width: 100%; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 0.5rem;">
+              <img src="${imgSrc}" alt="${s.title}" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" onerror="this.onerror=null; this.src='${defaultFallback}';">
             </div>
             <span class="section-tag" style="padding: 0.1rem 0.4rem; font-size: 0.65rem; margin-bottom: 0.25rem;">${s.badge || s.category}</span>
             <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem; color: var(--text-main);">${s.title}</h4>
