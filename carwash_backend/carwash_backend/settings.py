@@ -20,7 +20,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-carwash-default-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost,192.168.1.17', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv())
 
 # Merchant UPI Payment Configuration
 MERCHANT_UPI_ID = config('MERCHANT_UPI_ID', default='7032446215-5@ibl')
@@ -91,14 +91,15 @@ WSGI_APPLICATION = 'carwash_backend.wsgi.application'
 
 # Database Configuration (Neon PostgreSQL & Dynamic DATABASE_URL support)
 DEFAULT_NEON_URL = 'postgresql://neondb_owner:npg_Pe1mU2qfQBvk@ep-odd-tooth-ay5a87mb.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require'
-DATABASE_URL = config('DATABASE_URL', default=DEFAULT_NEON_URL).strip()
+raw_db_url = config('DATABASE_URL', default=DEFAULT_NEON_URL)
+if not raw_db_url or str(raw_db_url).strip() in ('', '""', "''", 'null', 'None'):
+    raw_db_url = DEFAULT_NEON_URL
 
-if not DATABASE_URL or DATABASE_URL in ('""', "''", 'null', 'None'):
-    DATABASE_URL = DEFAULT_NEON_URL
+DATABASE_URL = str(raw_db_url).strip()
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        DATABASE_URL,
+    'default': dj_database_url.config(
+        default=DATABASE_URL,
         conn_max_age=600,
         ssl_require=True if ('neon.tech' in DATABASE_URL or 'sslmode=require' in DATABASE_URL) else False
     )

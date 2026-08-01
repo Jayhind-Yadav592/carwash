@@ -135,14 +135,17 @@ class BookingCreateSerializer(serializers.ModelSerializer):
     Validates total_price > 0 and creates linked Payment.
     """
     service_id = serializers.CharField(required=False, write_only=True)
+    service = serializers.CharField(required=False, write_only=True)
     full_name = serializers.CharField(required=False, default='Customer')
     phone = serializers.CharField(required=False, default='')
     email = serializers.CharField(required=False, default='')
+    booking_time = serializers.CharField(required=True)
 
     class Meta:
         model = Booking
         fields = (
             'id',
+            'service',
             'service_id',
             'full_name',
             'phone',
@@ -158,6 +161,22 @@ class BookingCreateSerializer(serializers.ModelSerializer):
             'total_price'
         )
 
+    def validate_booking_time(self, value):
+        if not value:
+            return "10:00:00"
+        val_str = str(value).strip()
+        try:
+            from datetime import datetime
+            if 'AM' in val_str.upper() or 'PM' in val_str.upper():
+                return datetime.strptime(val_str.upper(), "%I:%M %p").time()
+            elif len(val_str.split(':')) == 2:
+                return datetime.strptime(val_str, "%H:%M").time()
+            elif len(val_str.split(':')) == 3:
+                return datetime.strptime(val_str, "%H:%M:%S").time()
+        except Exception:
+            pass
+        return "10:00:00"
+
     def validate_total_price(self, value):
         if value is not None and value <= 0:
             raise serializers.ValidationError("Booking total price must be greater than zero.")
@@ -168,7 +187,7 @@ class BookingCreateSerializer(serializers.ModelSerializer):
         user = request.user if (request and request.user and request.user.is_authenticated) else None
 
         # Resolve Service instance dynamically
-        raw_service_id = validated_data.pop('service_id', None)
+        raw_service_id = validated_data.pop('service_id', None) or validated_data.pop('service', None)
         service_instance = None
 
         if raw_service_id:

@@ -6,6 +6,8 @@ class ContactMessageSerializer(serializers.ModelSerializer):
     """
     Serializer for Contact Form Submissions and Admin Reading.
     """
+    subject = serializers.CharField(required=False, default='Doorstep Car Wash Inquiry')
+
     class Meta:
         model = ContactMessage
         fields = (
