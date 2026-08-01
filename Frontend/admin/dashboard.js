@@ -331,7 +331,7 @@ function renderNotificationsList() {
 
   const notifs = DashboardState.notificationsList || [];
   if (notifs.length === 0) {
-    container.innerHTML = `<div style="text-align: center; padding: 2.5rem; color: var(--text-muted); font-size: 0.95rem;"><i class="fa-solid fa-folder-open" style="font-size: 1.8rem; margin-bottom: 0.5rem; display: block; opacity: 0.5;"></i>No Data Available</div>`;
+    container.innerHTML = `<div style="text-align: center; padding: 2.5rem; color: var(--text-muted); font-size: 0.95rem;"><i class="fa-solid fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 0.5rem; display: block; opacity: 0.5;"></i>No Notifications.</div>`;
     return;
   }
 
@@ -350,10 +350,10 @@ function renderNotificationsList() {
 function renderOverviewKPIs() {
   const m = DashboardState.metrics;
   animateCounter('kpi-revenue', `₹${(m.todayRevenue || m.today_revenue || 0).toLocaleString()}`);
-  animateCounter('kpi-today-bookings', m.todayBookings || m.today_bookings || m.totalBookings || 0);
+  animateCounter('kpi-today-bookings', m.totalBookings || m.total_bookings || 0);
   animateCounter('kpi-pending-bookings', m.pendingBookings || m.pending_bookings || 0);
   animateCounter('kpi-completed-washes', m.completedBookings || m.completed_bookings || 0);
-  animateCounter('kpi-active-staff', m.totalServices || m.total_services || 0);
+  animateCounter('kpi-active-staff', m.totalUsers || m.total_users || 0);
   animateCounter('kpi-queue-count', m.upcomingBookings || m.upcoming_bookings || 0);
 
   const totalRevEl = document.getElementById('section-total-revenue');
@@ -367,14 +367,14 @@ function animateCounter(elementId, finalVal) {
   if (el) el.innerText = finalVal;
 }
 
-// Render Real-Time Activity Stream Widget
+// Render Real-Time Activity Stream Widget / Recent Payments
 function renderActivityStream() {
   const container = document.getElementById('activity-stream-container');
   if (!container) return;
 
   const bookings = DashboardState.bookings;
   if (bookings.length === 0) {
-    container.innerHTML = `<div style="text-align: center; padding: 1.8rem; color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-folder-open" style="font-size: 1.5rem; margin-bottom: 0.4rem; display: block; opacity: 0.5;"></i>No Data Available</div>`;
+    container.innerHTML = `<div style="text-align: center; padding: 1.8rem; color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-receipt" style="font-size: 1.5rem; margin-bottom: 0.4rem; display: block; opacity: 0.5;"></i>No Payments Found.</div>`;
     return;
   }
 
@@ -407,7 +407,7 @@ function renderVanFleetStatus() {
 
   const services = DashboardState.services;
   if (services.length === 0) {
-    container.innerHTML = `<div style="text-align: center; padding: 1.8rem; color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-folder-open" style="font-size: 1.5rem; margin-bottom: 0.4rem; display: block; opacity: 0.5;"></i>No Data Available</div>`;
+    container.innerHTML = `<div style="text-align: center; padding: 1.8rem; color: var(--text-muted); font-size: 0.88rem;"><i class="fa-solid fa-van-shuttle" style="font-size: 1.5rem; margin-bottom: 0.4rem; display: block; opacity: 0.5;"></i>No Data Available.</div>`;
     return;
   }
 
@@ -529,7 +529,7 @@ function renderBookingsTable() {
   if (!tbody) return;
 
   if (DashboardState.bookings.length === 0) {
-    const emptyHTML = '<tr><td colspan="8" class="text-center p-4 text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.5rem; display: block;"></i>No Data Available</td></tr>';
+    const emptyHTML = '<tr><td colspan="8" class="text-center p-4 text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.5rem; display: block;"></i>No bookings available.</td></tr>';
     tbody.innerHTML = emptyHTML;
     if (fullTbody) fullTbody.innerHTML = emptyHTML;
     return;
@@ -601,7 +601,7 @@ function renderServicesGrid() {
   if (!grid) return;
 
   if (DashboardState.services.length === 0) {
-    grid.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+    grid.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available.</div>`;
     return;
   }
 
@@ -632,7 +632,7 @@ function renderCustomersList() {
   if (!container) return;
 
   if (DashboardState.customers.length === 0) {
-    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available.</div>`;
     return;
   }
 
@@ -661,7 +661,7 @@ function renderEmployeesList() {
   if (!container) return;
 
   if (DashboardState.services.length === 0) {
-    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available.</div>`;
     return;
   }
 
@@ -686,7 +686,7 @@ function renderReviewsList() {
   if (!container) return;
 
   if (DashboardState.reviews.length === 0) {
-    container.innerHTML = `<div class="card p-4 text-center text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+    container.innerHTML = `<div class="card p-4 text-center text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available.</div>`;
     return;
   }
 
