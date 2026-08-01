@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: rudra-carwash
+    runtime: python
+    plan: free
+
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn carwash_backend.wsgi:application"
+
+    envVars:
+      - key: DEBUG
+        value: "False"
+
+      - key: SECRET_KEY
+        generateValue: true
+
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+
+      - key: MERCHANT_UPI_ID
+        value: "7032446215-5@ibl"
+
+      - key: MERCHANT_BUSINESS_NAME
+        value: "Rudra Doorstep Express"
+
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rudra-carwash-db
+          property: connectionString
+
+databases:
+  - name: rudra-carwash-db
+    plan: free
