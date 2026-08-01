@@ -90,27 +90,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'carwash_backend.wsgi.application'
 
 # Database Configuration (Neon PostgreSQL & Dynamic DATABASE_URL support)
-DATABASE_URL = config('DATABASE_URL', default='')
+DEFAULT_NEON_URL = 'postgresql://neondb_owner:npg_Pe1mU2qfQBvk@ep-odd-tooth-ay5a87mb.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require'
+DATABASE_URL = config('DATABASE_URL', default=DEFAULT_NEON_URL).strip()
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True if ('neon.tech' in DATABASE_URL or 'sslmode=require' in DATABASE_URL) else False
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
-            'NAME': config('DB_NAME', default='carwash_db'),
-            'USER': config('DB_USER', default='postgres'),
-            'PASSWORD': config('DB_PASSWORD', default='postgres'),
-            'HOST': config('DB_HOST', default='localhost'),
-            'PORT': config('DB_PORT', default='5432'),
-        }
-    }
+if not DATABASE_URL or DATABASE_URL in ('""', "''", 'null', 'None'):
+    DATABASE_URL = DEFAULT_NEON_URL
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True if ('neon.tech' in DATABASE_URL or 'sslmode=require' in DATABASE_URL) else False
+    )
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
