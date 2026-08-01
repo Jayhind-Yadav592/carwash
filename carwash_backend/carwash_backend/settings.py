@@ -102,14 +102,12 @@ WSGI_APPLICATION = 'carwash_backend.wsgi.application'
 # }
 DATABASES = {
     'default': dj_database_url.config(
-        default=(
-            f"{config('DB_ENGINE', default='django.db.backends.postgresql')}://"
-            f"{config('DB_USER', default='postgres')}:"
-            f"{config('DB_PASSWORD', default='postgres')}@"
-            f"{config('DB_HOST', default='localhost')}:"
-            f"{config('DB_PORT', default='5432')}/"
-            f"{config('DB_NAME', default='carwash_db')}"
-        )
+        default=config(
+            'DATABASE_URL',
+            default=f"postgres://{config('DB_USER', default='postgres')}:{config('DB_PASSWORD', default='postgres')}@{config('DB_HOST', default='localhost')}:{config('DB_PORT', default='5432')}/{config('DB_NAME', default='carwash_db')}"
+        ),
+        conn_max_age=600,
+        ssl_require=False
     )
 }
 
@@ -174,7 +172,7 @@ STATICFILES_DIRS = [
 ]
 if FRONTEND_DIR.exists():
     STATICFILES_DIRS.append(FRONTEND_DIR)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"    
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"    
 
 # Media files (Uploaded User Data)
 MEDIA_URL = '/media/'
