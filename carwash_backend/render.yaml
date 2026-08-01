@@ -18,10 +18,4 @@ services:
       - key: MERCHANT_BUSINESS_NAME
         value: "Rudra Doorstep Express"
       - key: DATABASE_URL
-        fromDatabase:
-          name: rudra-carwash-db
-          property: connectionString
-
-databases:
-  - name: rudra-carwash-db
-    plan: free
+        sync: false
