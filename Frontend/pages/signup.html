@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Customer Account | Rudra Doorstep Express</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .auth-box-wrapper {
+      max-width: 440px;
+      margin: 2rem auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SINGLE HIGH-VISIBILITY LOGO BACKGROUND WATERMARK -->
+  <div class="animated-logo-bg-layer">
+    <img src="../images/logo 1.jpeg" class="single-center-bg-logo" alt="Rudra Logo Background">
+  </div>
+
+  <!-- Navbar Header -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+        <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="reviews.html" class="nav-link">Reviews</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="booking.html" class="btn btn-yellow btn-sm"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+        <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-menu">
+    <div>
+      <div class="mobile-menu-header">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+          <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+        </a>
+        <button class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="mobile-nav-links">
+        <a href="../index.html" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="about.html" class="mobile-nav-link"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="services.html" class="mobile-nav-link"><i class="fa-solid fa-soap"></i> Services</a>
+        <a href="pricing.html" class="mobile-nav-link"><i class="fa-solid fa-tag"></i> Pricing</a>
+        <a href="gallery.html" class="mobile-nav-link"><i class="fa-solid fa-images"></i> Gallery</a>
+        <a href="booking.html" class="mobile-nav-link"><i class="fa-solid fa-calendar-plus"></i> Book Slot</a>
+        <a href="reviews.html" class="mobile-nav-link"><i class="fa-solid fa-star"></i> Reviews</a>
+        <a href="contact.html" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+        <a href="login.html" class="mobile-nav-link" style="color: var(--primary-dark-slate);"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="booking.html" class="mobile-nav-link" style="color: var(--accent-yellow);"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="backdrop"></div>
+
+  <!-- Dedicated Create Customer Account Section -->
+  <section class="section-padding" style="padding-top: 2rem;">
+    <div class="container">
+      
+      <div class="text-center" style="margin-bottom: 1.5rem;">
+        <div class="section-tag"><i class="fa-solid fa-user-plus"></i> CUSTOMER PORTAL</div>
+        <h2 class="section-title">Create Customer Account</h2>
+        <p class="section-subtitle">Register your account to manage doorstep car wash slots and bookings in Narasaraopet.</p>
+      </div>
+
+      <div class="auth-box-wrapper">
+        <div class="card-glass" style="padding: 1.75rem;">
+
+          <!-- Validation Error Container -->
+          <div id="register-error-container" style="display: none; background: rgba(220, 38, 38, 0.15); border: 1.5px solid var(--accent-red); color: #FCA5A5; padding: 0.85rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; font-size: 0.85rem;">
+            <div style="display: flex; align-items: flex-start; gap: 0.5rem;">
+              <i class="fa-solid fa-circle-exclamation" style="margin-top: 0.15rem; color: var(--accent-red);"></i>
+              <div id="register-error-text">Validation errors will appear here</div>
+            </div>
+          </div>
+
+          <form id="user-register-form">
+            <div class="form-group">
+              <label class="form-label" for="reg-name">Full Name (Letters Only)</label>
+              <input type="text" id="reg-name" class="form-control" placeholder="Full Name" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-username">Username or Email</label>
+              <input type="text" id="reg-username" class="form-control" placeholder="Username or Email" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-phone">10-Digit Mobile Number</label>
+              <input type="tel" id="reg-phone" class="form-control" placeholder="+91 XXXXX XXXXX" maxlength="15" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-password">Password</label>
+              <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" id="btn-submit-register" class="btn btn-yellow btn-block" style="margin-top: 1.25rem;">
+              <i class="fa-solid fa-user-plus"></i> Create Customer Account
+            </button>
+          </form>
+
+          <div class="text-center" style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">
+            Already have an account? <a href="login.html" style="color: var(--accent-yellow); font-weight: 700; text-decoration: underline;">Customer Login</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Unified Luxury Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <a href="../index.html" class="logo">
+            <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+            <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+          </a>
+          <p>Rudra Doorstep Express Car Wash in Narasaraopet. Mobile wash van service at your Home, Office, or Society.</p>
+          
+          <div class="footer-contact-pills">
+            <a href="tel:6300619133" class="footer-contact-pill phone-pill">
+              <i class="fa-solid fa-phone"></i> Hotline: 6300619133
+            </a>
+            <a href="https://www.instagram.com/rudra_door_step_express_wash?utm_source=qr" target="_blank" class="footer-contact-pill insta-pill">
+              <i class="fa-brands fa-instagram"></i> INSTAGRAM
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Wash Packages</h4>
+          <div class="footer-links">
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Foam & Water Wash (₹400)</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Foam Wash + Vacuum (₹500)</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Full Interior & Tyre Polish (₹600)</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Customer Navigation</h4>
+          <div class="footer-links">
+            <a href="booking.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Book Doorstep Slot</a>
+            <a href="reviews.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Customer Reviews</a>
+            <a href="contact.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Contact & Support</a>
+          </div>
+        </div>
+
+        <div class="footer-col footer-map-col">
+          <h4>Location Map</h4>
+          <div class="footer-map-address">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-red); margin-top: 2px;"></i>
+            <span>Pedda Cheruvu, Lenin Nagar, Narasaraopet (522601)</span>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Pedda+Cheruvu+Lenin+Nagar+Narasaraopet+Andhra+Pradesh+522601" target="_blank" class="footer-map-wrapper" title="Click to view exact Google Maps location">
+            <iframe src="https://maps.google.com/maps?q=Pedda%20Cheruvu%20Lenin%20Nagar%20Narasaraopet%20Andhra%20Pradesh%20522601&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100" style="border:0; pointer-events: none;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="map-click-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Google Maps</div>
+          </a>
+        </div>
+
+      </div>
+          <!-- Footer Bottom Copyright & Premium ElevateIQ Developer Branding -->
+      <div class="footer-bottom-branding">
+        <div class="footer-copyright-text">
+          © 2026 Rudra Doorstep Express Car Wash. All Rights Reserved.
+        </div>
+        <div class="elevateiq-developer-credit">
+          <span class="developer-label">Developed & Maintained By</span>
+          <span class="developer-brand-text">ElevateIQ Soft Tech</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const formReg = document.getElementById('user-register-form');
+      const errorContainer = document.getElementById('register-error-container');
+      const errorText = document.getElementById('register-error-text');
+
+      if (formReg) {
+        formReg.addEventListener('submit', async (e) => {
+          e.preventDefault(); // 12. Prevent default form submission
+          
+          if (errorContainer) errorContainer.style.display = 'none';
+
+          const name = document.getElementById('reg-name').value;
+          const username = document.getElementById('reg-username').value;
+          const phone = document.getElementById('reg-phone').value;
+          const pass = document.getElementById('reg-password').value;
+
+          // Input validations check
+          if (window.validateName && !window.validateName(name)) return;
+          if (window.validatePhone && !window.validatePhone(phone)) return;
+
+          console.log('Submitting registration form for:', name, username);
+
+          // Execute API Registration
+          const res = await Auth.register(name, username, phone, pass);
+          
+          if (res.success) {
+            showToast('Account created successfully! Redirecting to login...', 'success');
+            // 13. Ensure successful registration redirects to login
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 1000);
+          } else {
+            console.warn('Registration failed:', res.message);
+            // 14. Display validation errors from backend on the page
+            if (errorContainer && errorText) {
+              errorText.innerHTML = `<strong>Registration Failed:</strong><br>${res.message.replace(/\n/g, '<br>')}`;
+              errorContainer.style.display = 'block';
+            }
+            showToast(res.message, 'error');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

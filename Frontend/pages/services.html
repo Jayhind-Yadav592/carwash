@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Details | Rudra Doorstep Express</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .service-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 17, 31, 0.72);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    .service-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .service-modal-card {
+      background: #FFFFFF;
+      border: 2px solid var(--accent-yellow);
+      border-radius: var(--radius-lg);
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .service-modal-close {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #DFE6ED;
+      color: var(--primary-dark-slate);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .service-modal-close:hover {
+      background: var(--accent-red);
+      color: #FFFFFF;
+    }
+    .service-step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin: 1rem 0;
+    }
+    .service-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+    .service-step-item i {
+      color: var(--accent-yellow);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SINGLE HIGH-VISIBILITY LOGO BACKGROUND WATERMARK -->
+  <div class="animated-logo-bg-layer">
+    <img src="../images/logo 1.jpeg" class="single-center-bg-logo" alt="Rudra Logo Background">
+  </div>
+
+  <!-- Navbar Header -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+        <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link active">Services</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="reviews.html" class="nav-link">Reviews</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="booking.html" class="btn btn-yellow btn-sm"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+        <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-menu">
+    <div>
+      <div class="mobile-menu-header">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+          <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+        </a>
+        <button class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="mobile-nav-links">
+        <a href="../index.html" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="about.html" class="mobile-nav-link"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="services.html" class="mobile-nav-link active"><i class="fa-solid fa-soap"></i> Services</a>
+        <a href="pricing.html" class="mobile-nav-link"><i class="fa-solid fa-tag"></i> Pricing</a>
+        <a href="gallery.html" class="mobile-nav-link"><i class="fa-solid fa-images"></i> Gallery</a>
+        <a href="booking.html" class="mobile-nav-link"><i class="fa-solid fa-calendar-plus"></i> Book Slot</a>
+        <a href="reviews.html" class="mobile-nav-link"><i class="fa-solid fa-star"></i> Reviews</a>
+        <a href="contact.html" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+        <a href="login.html" class="mobile-nav-link" style="color: var(--primary-dark-slate);"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="booking.html" class="mobile-nav-link" style="color: var(--accent-yellow);"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="backdrop"></div>
+
+  <!-- Services Grid Section -->
+  <section class="section-padding" style="padding-top: 2rem;">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 2rem;">
+        <div class="section-tag"><i class="fa-solid fa-soap"></i> OUR WASH SERVICES & DETAILS</div>
+        <h2 class="section-title">Doorstep Wash Breakdown</h2>
+        <p class="section-subtitle">Click any wash service to view a detailed breakdown of what is included, tools used, and doorstep process!</p>
+      </div>
+
+      <div class="services-grid" id="services-catalog-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+        <!-- Card 1 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 2.jpeg" alt="Exterior Foam & Water Wash" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Standard Wash</span>
+            <h3 style="font-size: 1.15rem;">Exterior Foam & Water Wash</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              High-pressure foam wash, pressure water rinse, wheel rim cleaning & microfiber hand dry at your doorstep.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹400</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 1.5 Hours</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-foam-water">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-foam-water" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 3.jpeg" alt="Foam Wash + Vacuum Cleaning" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Best Value</span>
+            <h3 style="font-size: 1.15rem;">Foam Wash + Vacuum Cleaning</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              Foam & pressure water exterior wash plus complete cabin & trunk vacuum cleaning.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹500</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 1.5 Hours</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-foam-vacuum">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-foam-vacuum" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 4.jpeg" alt="Full Spa & Interior Sanitization" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Full Spa</span>
+            <h3 style="font-size: 1.15rem;">Full Spa & Interior Sanitization</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              Complete foam & water wash, full interior sanitization, dashboard dressing & deep black tyre polish.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹600</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 1.5 Hours</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-complete-spa">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-complete-spa" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 1.jpg" alt="High-Pressure Exterior Jet Wash" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Exterior Only</span>
+            <h3 style="font-size: 1.15rem;">High-Pressure Exterior Jet Wash</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              Targeted exterior mud removal, high-pressure water jet rinse & streak-free glass wiping.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹350</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 1.0 Hour</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-exterior-wash">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-exterior-wash" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 5.jpeg" alt="Ceramic Coating & Paint Polish" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Premium Detailing</span>
+            <h3 style="font-size: 1.15rem;">Ceramic Coating & Paint Polish</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              Premium hydrophobic ceramic wax coating for mirror shine & UV paint protection.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹1200</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 2.5 Hours</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-ceramic-coating">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-ceramic-coating" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 6.jpeg" alt="Engine Bay & Underbody Jet Cleaning" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Engine Care</span>
+            <h3 style="font-size: 1.15rem;">Engine Bay & Underbody Cleaning</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              High-pressure engine compartment degreasing and underbody mud flush.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹450</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 1.2 Hours</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-engine-cleaning">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-engine-cleaning" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 7.jpeg" alt="Waterless Eco Express Wash" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Eco Friendly</span>
+            <h3 style="font-size: 1.15rem;">Waterless Eco Express Wash</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              Eco-friendly waterless polymer spray wash and microfiber buffing for quick shine.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹300</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 45 Mins</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-waterless-wash">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-waterless-wash" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="../images/car 8.jpeg" alt="Wheel Rim & Deep Black Tyre Polish" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">Tyre Care</span>
+            <h3 style="font-size: 1.15rem;">Wheel Rim & Deep Black Tyre Polish</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              Brake dust removal, alloy rim polishing & silicone-based deep black tyre gloss.
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹250</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 30 Mins</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="srv-tyre-rim-care">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=srv-tyre-rim-care" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Service Detail Modal -->
+  <div class="service-modal-overlay" id="service-detail-modal">
+    <div class="service-modal-card">
+      <button class="service-modal-close" id="close-service-modal"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div style="height: 160px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1rem;">
+        <img id="modal-service-img" src="" alt="Service Image" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+
+      <span class="section-tag" id="modal-service-badge" style="margin-bottom: 0.35rem;">Standard</span>
+      <h3 id="modal-service-title" style="font-size: 1.35rem; color: var(--primary-dark-slate); margin-bottom: 0.35rem;">Foam & Water Wash</h3>
+      <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--accent-yellow);" id="modal-service-price">₹400</div>
+
+      <p id="modal-service-desc" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem; line-height: 1.4; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+        Detailed service description...
+      </p>
+
+      <h4 style="margin-top: 1rem; font-size: 0.95rem; color: var(--primary-dark-slate);"><i class="fa-solid fa-list-check" style="color: var(--accent-yellow);"></i> What's Included In This Wash:</h4>
+      <div class="service-step-list" id="modal-service-steps">
+        <!-- Dynamic steps inserted here -->
+      </div>
+
+      <div style="background: var(--accent-yellow-light); border: 1px solid rgba(217,119,6,0.3); padding: 0.75rem; border-radius: var(--radius-md); margin-bottom: 1.25rem;">
+        <strong style="font-size: 0.82rem; color: var(--text-main); display: block; margin-bottom: 0.25rem;"><i class="fa-solid fa-van-shuttle" style="color: var(--accent-yellow);"></i> Equipment Brought To Your Location:</strong>
+        <span id="modal-service-tools" style="font-size: 0.78rem; color: var(--text-muted);">High-pressure water jet, foam cannon sprayer, microfiber drying towels, wheel rim brushes.</span>
+      </div>
+
+      <a id="modal-book-btn" href="booking.html" class="btn btn-yellow btn-block btn-lg">
+        <i class="fa-solid fa-calendar-check"></i> Book This Service
+      </a>
+    </div>
+  </div>
+
+  <!-- Unified Luxury Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <a href="../index.html" class="logo">
+            <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+            <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+          </a>
+          <p>Rudra Doorstep Express Car Wash in Narasaraopet. Mobile wash van service at your Home, Office, or Society.</p>
+          
+          <div class="footer-contact-pills">
+            <a href="tel:6300619133" class="footer-contact-pill phone-pill">
+              <i class="fa-solid fa-phone"></i> Hotline: 6300619133
+            </a>
+            <a href="https://www.instagram.com/rudra_door_step_express_wash?utm_source=qr" target="_blank" class="footer-contact-pill insta-pill">
+              <i class="fa-brands fa-instagram"></i> INSTAGRAM
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Wash Packages</h4>
+          <div class="footer-links">
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Foam & Water Wash (₹400)</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Foam Wash + Vacuum (₹500)</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Full Interior & Tyre Polish (₹600)</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Customer Navigation</h4>
+          <div class="footer-links">
+            <a href="booking.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Book Doorstep Slot</a>
+            <a href="reviews.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Customer Reviews</a>
+            <a href="contact.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Contact & Support</a>
+          </div>
+        </div>
+
+        <div class="footer-col footer-map-col">
+          <h4>Location Map</h4>
+          <div class="footer-map-address">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-red); margin-top: 2px;"></i>
+            <span>Pedda Cheruvu, Lenin Nagar, Narasaraopet (522601)</span>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Pedda+Cheruvu+Lenin+Nagar+Narasaraopet+Andhra+Pradesh+522601" target="_blank" class="footer-map-wrapper" title="Click to view exact Google Maps location">
+            <iframe src="https://maps.google.com/maps?q=Pedda%20Cheruvu%20Lenin%20Nagar%20Narasaraopet%20Andhra%20Pradesh%20522601&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100" style="border:0; pointer-events: none;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="map-click-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Google Maps</div>
+          </a>
+        </div>
+
+      </div>
+          <!-- Footer Bottom Copyright & Premium ElevateIQ Developer Branding -->
+      <div class="footer-bottom-branding">
+        <div class="footer-copyright-text">
+          © 2026 Rudra Doorstep Express Car Wash. All Rights Reserved.
+        </div>
+        <div class="elevateiq-developer-credit">
+          <span class="developer-label">Developed & Maintained By</span>
+          <span class="developer-brand-text">ElevateIQ Soft Tech</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    const SERVICE_DETAILS = {
+      'srv-foam-water': {
+        steps: [
+          'High-Pressure Water Rinse to remove surface mud & road grit',
+          'Thick pH-Neutral Snow Foam Cannon Soak for paint protection',
+          'Microfiber Hand Scrub for gentle dirt removal',
+          'Clean Water Pressure Rinse & Glass Streak-Free Wiping',
+          'Wheel Rims & Mudguard Cleaning'
+        ],
+        tools: 'Mobile Pressure Wash Generator, Snow Foam Cannon, Microfiber Towels & Wheel Brushes'
+      },
+      'srv-foam-vacuum': {
+        steps: [
+          'Complete Foam & Pressure Water Wash for car exterior',
+          'Heavy-Duty Cabin Vacuuming for all seats, carpets & mats',
+          'Dashboard & AC Vents Dusting',
+          'Floor Mats Shampoo Washing & Sun Drying',
+          'Trunk / Boot Cabin Vacuuming'
+        ],
+        tools: 'Pressure Washer, Snow Foam Gun, High-Suction Cabin Vacuum Cleaner & Detail Brushes'
+      },
+      'srv-complete-spa': {
+        steps: [
+          'High-Pressure Water & Thick Foam Exterior Soak',
+          'Deep Cabin Vacuuming for seats, footwells & boot',
+          'Full Interior Cabin Cleaning & Dashboard Satin Dressing',
+          'Door Panels & Upholstery Wipe Down',
+          'Deep Black Gloss Tyre Polish & Rim Shiner'
+        ],
+        tools: 'Mobile Pressure Wash System, Industrial Suction Vacuum, Premium Interior Polish & Tyre Gloss Dressing'
+      },
+      'srv-exterior-wash': {
+        steps: [
+          'Pre-soak Mud & Dirt Dissolving Jet Spray',
+          'High-Pressure Exterior Water Wash',
+          'Glass & Mirror Streak-Free Wiping',
+          'Wheel Arch & Mud Flap Flush'
+        ],
+        tools: 'High-Pressure Water Jet Sprayer, Microfiber Drying Mitts & Glass Cleaner'
+      },
+      'srv-ceramic-coating': {
+        steps: [
+          'Paint Decontamination & Surface Degreasing',
+          'Hand Application of Hydrophobic Ceramic Spray Wax',
+          'High-Gloss Microfiber Buffing for Mirror Finish',
+          'UV Paint Shield & Water Bead Layer Setup'
+        ],
+        tools: 'Ceramic Hydrophobic Polymer Coating, Orbital Microfiber Buffing Towels & Paint Prep Cleaner'
+      },
+      'srv-engine-cleaning': {
+        steps: [
+          'Engine Compartment Electrical Shielding',
+          'Eco Degreaser Spray & Soft Detail Brushing',
+          'Low-Pressure Water Flush & Air Blow Drying',
+          'Underbody Mud Wash & Anti-Corrosion Spray'
+        ],
+        tools: 'Engine Degreaser Spray, Soft Detail Brushes, Low-Pressure Rinser & Dryer'
+      },
+      'srv-waterless-wash': {
+        steps: [
+          'Eco-Polymer Waterless Lubricant Spray',
+          'Single-Direction Scratch-Free Dirt Wipe',
+          'Dual Microfiber Buffing for Deep Gloss',
+          'Window & Windshield Streak-Free Clean'
+        ],
+        tools: 'Waterless Polymer Emulsion, Plush 500GSM Microfiber Cloths'
+      },
+      'srv-tyre-rim-care': {
+        steps: [
+          'Alloy Rim Brake Dust Cleaning & Scrub',
+          'Tyre Sidewall Deep Wash & Drying',
+          'Silicone-Based Deep Black Gloss Tyre Dressing',
+          'Anti-Dust Wheel Rim Protectant Wipe'
+        ],
+        tools: 'Alloy Rim Wheel Cleaner, Stiff Scrub Brushes, Deep Black Tyre Gloss Shiner'
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const container = document.getElementById('services-catalog-container');
+      const modal = document.getElementById('service-detail-modal');
+      const closeBtn = document.getElementById('close-service-modal');
+      const services = await Store.getServices();
+
+      container.innerHTML = services.map(s => `
+        <div class="card-glass service-card text-center" style="cursor: pointer;">
+          <div>
+            <div style="height: 140px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 0.85rem;">
+              <img src="${s.image}" alt="${s.title}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="section-tag" style="padding: 0.15rem 0.5rem; font-size: 0.68rem; margin-bottom: 0.25rem;">${s.category}</span>
+            <h3 style="font-size: 1.15rem;">${s.title}</h3>
+            <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.35rem; min-height: 40px;">
+              ${s.description}
+            </p>
+          </div>
+          <div>
+            <div class="service-meta" style="margin-top: 0.85rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <span class="service-price" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-yellow);">₹${s.price}</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.duration}</span>
+            </div>
+            
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-secondary btn-block btn-open-modal" data-srv-id="${s.id}">
+                <i class="fa-solid fa-circle-info"></i> View Details
+              </button>
+              <a href="booking.html?service=${s.id}" class="btn btn-yellow btn-block">
+                <i class="fa-solid fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Open Modal Handler
+      document.querySelectorAll('.btn-open-modal').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const srvId = btn.getAttribute('data-srv-id');
+          const serviceObj = services.find(s => s.id === srvId);
+          if (!serviceObj) return;
+
+          const details = SERVICE_DETAILS[srvId] || SERVICE_DETAILS['srv-foam-water'];
+
+          document.getElementById('modal-service-img').src = serviceObj.image;
+          document.getElementById('modal-service-badge').textContent = serviceObj.category;
+          document.getElementById('modal-service-title').textContent = serviceObj.title;
+          document.getElementById('modal-service-price').textContent = `₹${serviceObj.price} (${serviceObj.duration})`;
+          document.getElementById('modal-service-desc').textContent = serviceObj.description;
+
+          document.getElementById('modal-service-steps').innerHTML = details.steps.map(step => `
+            <div class="service-step-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>${step}</span>
+            </div>
+          `).join('');
+
+          document.getElementById('modal-service-tools').textContent = details.tools;
+          document.getElementById('modal-book-btn').href = `booking.html?service=${serviceObj.id}`;
+
+          modal.classList.add('active');
+        });
+      });
+
+      closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

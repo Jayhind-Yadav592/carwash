@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Rudra Doorstep Express</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Dashboard Stylesheets -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/admin/dashboard.css">
+</head>
+<body class="admin-body">
+
+  <!-- SINGLE HIGH-VISIBILITY LOGO BACKGROUND WATERMARK -->
+  <div class="animated-logo-bg-layer">
+    <img src="../images/logo 1.jpeg" class="single-center-bg-logo" alt="Rudra Logo Background">
+  </div>
+
+  <div class="app-layout">
+    
+    <!-- CLEAN WHITE LEFT SIDEBAR -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="../index.html" class="brand-logo">
+            <img src="../images/logo 1.jpeg" alt="Rudra Logo">
+            <div class="brand-title">RUDRA <span>DOORSTEP EXPRESS CAR WASH</span></div>
+          </a>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-category">Main Operations</div>
+          <a href="#" class="sidebar-link active" data-section="overview">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>Dashboard</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="bookings">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-calendar-check"></i>
+              <span>Bookings</span>
+            </div>
+            <span class="sidebar-badge">Live</span>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="services">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-soap"></i>
+              <span>Services</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="customers">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-users"></i>
+              <span>Customers</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="slots">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-clock"></i>
+              <span>Slot Management</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="employees">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-user-shield"></i>
+              <span>Employees</span>
+            </div>
+          </a>
+
+          <div class="nav-category">Analytics & Media</div>
+          <a href="#" class="sidebar-link" data-section="revenue">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              <span>Revenue</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="reviews">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-star"></i>
+              <span>Reviews</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="gallery">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-images"></i>
+              <span>Gallery</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="notifications">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-bell"></i>
+              <span>Notifications</span>
+            </div>
+          </a>
+
+          <a href="#" class="sidebar-link" data-section="reports">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-file-invoice"></i>
+              <span>Reports</span>
+            </div>
+          </a>
+
+          <div class="nav-category">System</div>
+          <a href="#" class="sidebar-link" data-section="settings">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-gear"></i>
+              <span>Settings</span>
+            </div>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+          <i class="fa-solid fa-globe"></i> <span>View Website</span>
+        </a>
+        <a href="../pages/admin-login.html" id="btn-admin-logout" class="btn btn-primary btn-sm" style="width: 100%; justify-content: center; background: rgba(220,38,38,0.15); color: #DC2626; border: 1px solid rgba(220,38,38,0.3);">
+          <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- SIDEBAR MOBILE BACKDROP -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="app-main">
+      
+      <!-- TOP NAVBAR -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button id="mobile-sidebar-toggle" class="icon-btn" style="display: none;">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass text-muted"></i>
+            <input type="text" placeholder="Search bookings, customers, slots...">
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-btn" id="topbar-notif-btn" title="Notifications" onclick="switchTab('notifications')">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notification-count-badge" id="topbar-notif-badge" style="display: none;">0</span>
+          </button>
+
+          <div class="user-profile-menu">
+            <img src="../images/logo 1.jpeg" alt="Admin Avatar" class="avatar">
+            <div class="user-info">
+              <div class="user-name">Rudra Admin</div>
+              <div class="user-role">Doorstep Manager</div>
+            </div>
+            <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT AREA -->
+      <div class="page-container">
+
+        <!-- TAB SECTION 1: OVERVIEW -->
+        <section class="tab-section" id="section-overview" style="display: block;">
+          
+          <!-- Hero Welcome Banner -->
+          <div class="hero-welcome-card">
+            <div class="hero-content">
+              <h2>Welcome back, Admin 👋</h2>
+              <p>Live doorstep car wash operations monitoring for Narasaraopet. Mobile vans active with 100% capacity tracking.</p>
+            </div>
+            <div class="hero-actions">
+              <button class="btn btn-yellow" id="btn-add-booking"><i class="fa-solid fa-plus"></i> Add Booking</button>
+              <button class="btn btn-secondary" onclick="switchTab('reports')"><i class="fa-solid fa-download"></i> Report</button>
+            </div>
+          </div>
+
+          <!-- KPI Cards Grid -->
+          <div class="kpi-grid">
+            <div class="card kpi-card">
+              <div>
+                <div class="kpi-lbl">Today's Revenue</div>
+                <div class="kpi-val" id="kpi-revenue" style="color: var(--accent-green);">₹8,400</div>
+                <div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +14.2% from yesterday</div>
+              </div>
+              <div class="kpi-icon" style="background: var(--accent-green-light); color: var(--accent-green);">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+              </div>
+            </div>
+
+            <div class="card kpi-card">
+              <div>
+                <div class="kpi-lbl">Today's Bookings</div>
+                <div class="kpi-val" id="kpi-today-bookings" style="color: var(--brand-orange);">42</div>
+                <div class="kpi-trend trend-up"><i class="fa-solid fa-circle-check"></i> 100% Slot Utilization</div>
+              </div>
+              <div class="kpi-icon" style="background: var(--brand-orange-light); color: var(--brand-orange);">
+                <i class="fa-solid fa-calendar-day"></i>
+              </div>
+            </div>
+
+            <div class="card kpi-card">
+              <div>
+                <div class="kpi-lbl">Pending Bookings</div>
+                <div class="kpi-val" id="kpi-pending-bookings" style="color: var(--accent-blue);">8</div>
+                <div class="kpi-trend trend-up"><i class="fa-solid fa-clock"></i> Assigned to Doorstep Van</div>
+              </div>
+              <div class="kpi-icon" style="background: var(--accent-blue-light); color: var(--accent-blue);">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+              </div>
+            </div>
+
+            <div class="card kpi-card">
+              <div>
+                <div class="kpi-lbl">Completed Washes</div>
+                <div class="kpi-val" id="kpi-completed-washes" style="color: var(--accent-purple);">18</div>
+                <div class="kpi-trend trend-up"><i class="fa-solid fa-circle-check"></i> Quality Verified</div>
+              </div>
+              <div class="kpi-icon" style="background: var(--accent-purple-light); color: var(--accent-purple);">
+                <i class="fa-solid fa-square-check"></i>
+              </div>
+            </div>
+
+            <div class="card kpi-card">
+              <div>
+                <div class="kpi-lbl">Active Staff</div>
+                <div class="kpi-val" id="kpi-active-staff" style="color: var(--text-main);">3</div>
+                <div class="kpi-trend trend-up"><i class="fa-solid fa-truck-fast"></i> Van On-The-Move</div>
+              </div>
+              <div class="kpi-icon" style="background: rgba(10,17,31,0.06); color: var(--text-main);">
+                <i class="fa-solid fa-user-shield"></i>
+              </div>
+            </div>
+
+            <div class="card kpi-card">
+              <div>
+                <div class="kpi-lbl">Vehicles in Queue</div>
+                <div class="kpi-val" id="kpi-queue-count" style="color: var(--brand-orange);">4</div>
+                <div class="kpi-trend trend-up"><i class="fa-solid fa-car"></i> Next Slot</div>
+              </div>
+              <div class="kpi-icon" style="background: var(--brand-orange-light); color: var(--brand-orange);">
+                <i class="fa-solid fa-car-side"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Useful Admin Operations & Activity Widgets (Replacing Graphs) -->
+          <div class="grid-2col">
+            <!-- Widget 1: Real-Time Dispatch Log & Activity Stream -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="fa-solid fa-bolt" style="color: var(--brand-orange);"></i> Real-Time Dispatch & Activity Stream</div>
+                <span class="badge badge-confirmed"><i class="fa-solid fa-circle-dot fa-spin"></i> Live Feed</span>
+              </div>
+              <div id="activity-stream-container" style="display: flex; flex-direction: column; gap: 0.85rem; max-height: 280px; overflow-y: auto;">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem; background: #F8FAFC; border-radius: var(--radius-md); border-left: 3px solid var(--accent-green);">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-green-light); color: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
+                    <i class="fa-solid fa-circle-check"></i>
+                  </div>
+                  <div>
+                    <strong style="font-size: 0.82rem; color: var(--text-main);">UPI Payment Verified (RCW-9026)</strong>
+                    <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1px;">Rajesh Kumar paid ₹500 via Google Pay. Receipt issued.</p>
+                    <span style="font-size: 0.68rem; color: var(--text-subtle); font-weight: 700;">2 mins ago</span>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem; background: #F8FAFC; border-radius: var(--radius-md); border-left: 3px solid var(--brand-orange);">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--brand-orange-light); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
+                    <i class="fa-solid fa-truck-fast"></i>
+                  </div>
+                  <div>
+                    <strong style="font-size: 0.82rem; color: var(--text-main);">Mobile Van #1 Dispatched</strong>
+                    <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1px;">Crew lead Ramesh Babu en route to Lenin Nagar, Narasaraopet.</p>
+                    <span style="font-size: 0.68rem; color: var(--text-subtle); font-weight: 700;">14 mins ago</span>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem; background: #F8FAFC; border-radius: var(--radius-md); border-left: 3px solid var(--accent-blue);">
+                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-blue-light); color: var(--accent-blue); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
+                    <i class="fa-solid fa-calendar-check"></i>
+                  </div>
+                  <div>
+                    <strong style="font-size: 0.82rem; color: var(--text-main);">New Guest Booking Received</strong>
+                    <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1px;">Customer booked Foam Wash + Interior Vacuum for 10:00 AM slot.</p>
+                    <span style="font-size: 0.68rem; color: var(--text-subtle); font-weight: 700;">28 mins ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Widget 2: Van Fleet & Crew Dispatch Operations -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="fa-solid fa-truck-monster" style="color: var(--accent-blue);"></i> Mobile Van Fleet Status</div>
+                <button class="btn btn-secondary btn-sm" onclick="switchTab('employees')"><i class="fa-solid fa-user-gear"></i> Manage Crew</button>
+              </div>
+              
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: #FFFFFF; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+                  <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-green-light); color: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                      <i class="fa-solid fa-van-shuttle"></i>
+                    </div>
+                    <div>
+                      <strong style="font-size: 0.85rem; color: var(--text-main); display: block;">Van #1 (AP 07 EV 1001)</strong>
+                      <span style="font-size: 0.74rem; color: var(--text-muted);">Lead: Ramesh Babu (6300619133)</span>
+                    </div>
+                  </div>
+                  <span class="badge badge-completed"><i class="fa-solid fa-location-dot"></i> Active (Narasaraopet)</span>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: #FFFFFF; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+                  <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--brand-orange-light); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                      <i class="fa-solid fa-van-shuttle"></i>
+                    </div>
+                    <div>
+                      <strong style="font-size: 0.85rem; color: var(--text-main); display: block;">Van #2 (AP 07 EV 1002)</strong>
+                      <span style="font-size: 0.74rem; color: var(--text-muted);">Lead: Suresh V. (9440123456)</span>
+                    </div>
+                  </div>
+                  <span class="badge badge-pending"><i class="fa-solid fa-clock"></i> Standby (HQ Station)</span>
+                </div>
+
+                <!-- Quick Action Buttons Row -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.25rem;">
+                  <button class="btn btn-yellow btn-sm" id="btn-quick-dispatch" onclick="showToast('Dispatching nearest van to customer location...', 'info')">
+                    <i class="fa-solid fa-paper-plane"></i> Quick Dispatch
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="switchTab('slots')">
+                    <i class="fa-solid fa-lock"></i> Lock Slot
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Slot Occupancy Grid -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-truck-fast" style="color: var(--brand-orange);"></i> Doorstep Slot Occupancy (2 Vehicles Max Per Slot)</div>
+              <button class="btn btn-secondary btn-sm" onclick="switchTab('slots')">View Full Calendar</button>
+            </div>
+            <div id="slot-occupancy-container"></div>
+          </div>
+
+          <!-- Master Bookings Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-list-check" style="color: var(--brand-orange);"></i> Active Doorstep Booking Schedule</div>
+              <button class="btn btn-yellow btn-sm" id="btn-new-booking-table"><i class="fa-solid fa-plus"></i> New Booking</button>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Slot Time</th>
+                    <th>Vehicle</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="bookings-table-tbody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- TAB SECTION 2: BOOKINGS -->
+        <section class="tab-section" id="section-bookings" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-calendar-days" style="color: var(--brand-orange);"></i> Master Doorstep Bookings Directory</div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-file-pdf"></i> PDF Export</button>
+                <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-file-excel"></i> Excel Export</button>
+              </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+              Filter, search, or update status of doorstep car wash appointments across Narasaraopet.
+            </p>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Slot</th>
+                    <th>Vehicle</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="full-bookings-tbody">
+                  <!-- Synced with JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 3: SERVICES -->
+        <section class="tab-section" id="section-services" style="display: none;">
+          <div class="card-header" style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-layer-group" style="color: var(--brand-orange);"></i> Doorstep Wash Packages Catalog</h3>
+            <button class="btn btn-yellow"><i class="fa-solid fa-plus"></i> Add New Package</button>
+          </div>
+          <div class="services-grid" id="services-cards-grid">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- TAB SECTION 4: CUSTOMERS -->
+        <section class="tab-section" id="section-customers" style="display: none;">
+          <div class="card-header" style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-users" style="color: var(--brand-orange);"></i> Customer Directory & Loyalty Points</h3>
+          </div>
+          <div class="services-grid" id="customers-cards-grid">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- TAB SECTION 5: SLOT MANAGEMENT -->
+        <section class="tab-section" id="section-slots" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-clock" style="color: var(--brand-orange);"></i> Doorstep Van Slot Occupancy Calendar</div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
+              Monitor van capacity limit (2 vehicles per 1.5-hour slot). Lock or unlock slots dynamically.
+            </p>
+            <div id="full-slots-calendar-container"></div>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 6: EMPLOYEES -->
+        <section class="tab-section" id="section-employees" style="display: none;">
+          <div class="card-header" style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-user-shield" style="color: var(--brand-orange);"></i> Mobile Van Crew & Technicians</h3>
+            <button class="btn btn-yellow"><i class="fa-solid fa-user-plus"></i> Add Employee</button>
+          </div>
+          <div class="services-grid" id="employees-cards-grid">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- TAB SECTION 7: REVENUE -->
+        <section class="tab-section" id="section-revenue" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-indian-rupee-sign" style="color: var(--accent-green);"></i> Revenue & Financial Performance</div>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Total Revenue Collected: <strong style="color: var(--accent-green); font-size: 1.4rem;">₹25,200</strong></p>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 8: REVIEWS -->
+        <section class="tab-section" id="section-reviews" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-star" style="color: var(--brand-orange);"></i> Customer Feedback & Reviews</div>
+            </div>
+            <div id="reviews-list-container"></div>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 9: GALLERY -->
+        <section class="tab-section" id="section-gallery" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-images" style="color: var(--brand-orange);"></i> Wash Transformation Showcase</div>
+            </div>
+            <p style="color: var(--text-muted);">Manage before & after wash transformation images.</p>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 10: NOTIFICATIONS -->
+        <section class="tab-section" id="section-notifications" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-bell" style="color: var(--brand-orange);"></i> Activity Feed & Notifications</div>
+              <button class="btn btn-secondary btn-sm" onclick="markAllNotificationsRead()"><i class="fa-solid fa-check-double me-1"></i> Mark All as Read</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">Real-time doorstep car wash booking, payment, and van dispatch notifications.</p>
+            <div id="notifications-list-container">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 11: REPORTS -->
+        <section class="tab-section" id="section-reports" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-file-invoice" style="color: var(--brand-orange);"></i> System Reports & Performance Audit</div>
+              <button class="btn btn-yellow"><i class="fa-solid fa-download"></i> Export Full Audit Report</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB SECTION 12: SETTINGS -->
+        <section class="tab-section" id="section-settings" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-gear" style="color: var(--brand-orange);"></i> Platform & Business Settings</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Business Name</label>
+              <input type="text" class="form-control" value="Rudra Doorstep Express Car Wash">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Support Hotline</label>
+              <input type="text" class="form-control" value="6300619133">
+            </div>
+            <button class="btn btn-yellow">Save Settings</button>
+          </div>
+        <!-- Admin Dashboard Footer -->
+        <footer class="footer-bottom-branding" style="margin-top: 2rem;">
+          <div class="footer-copyright-text">
+            © 2026 Rudra Doorstep Express Car Wash. All Rights Reserved.
+          </div>
+          <div class="elevateiq-developer-credit">
+          <span class="developer-label">Developed & Maintained By</span>
+          <span class="developer-brand-text">ElevateIQ Soft Tech</span>
+        </div>
+        </footer>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ADD BOOKING MODAL -->
+  <div class="modal-overlay" id="modal-add-booking">
+    <div class="modal-card">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="color: var(--text-main); font-family: var(--font-heading); text-transform: uppercase;"><i class="fa-solid fa-calendar-plus" style="color: var(--brand-orange);"></i> Create New Doorstep Booking</h3>
+        <button class="icon-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-create-booking">
+        <div class="form-group">
+          <label class="form-label">Customer Name</label>
+          <input type="text" class="form-control" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Car Model & Number</label>
+          <input type="text" class="form-control" placeholder="e.g. Swift (AP 07 BK 1234)" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select Package</label>
+          <select class="form-control">
+            <option value="400">Foam & Water Wash (₹400)</option>
+            <option value="500">Foam Wash + Vacuum (₹500)</option>
+            <option value="600">Full Interior & Polish (₹600)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center; margin-top: 1rem;">Confirm & Save Booking</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="/js/store.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/admin/dashboard.js"></script>
+</body>
+</html>

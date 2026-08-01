@@ -1,0 +1,203 @@
+/* ==========================================================================
+   ADMIN DASHBOARD SPECIFIC STYLES
+   ========================================================================== */
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #060D17;
+  color: var(--text-main);
+}
+
+/* Admin Sidebar */
+.admin-sidebar {
+  width: 260px;
+  background: var(--primary-navy);
+  border-right: 1px solid var(--border-color);
+  padding: 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  transition: var(--transition);
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.admin-nav-item:hover, .admin-nav-item.active {
+  background: var(--accent-sky-light);
+  color: var(--accent-sky);
+}
+
+.admin-nav-item i {
+  font-size: 1.1rem;
+  width: 24px;
+}
+
+/* Admin Main Content Wrapper */
+.admin-main {
+  margin-left: 260px;
+  flex: 1;
+  padding: 2rem;
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Admin Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.metric-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.metric-data strong {
+  font-size: 1.8rem;
+  font-family: var(--font-heading);
+  display: block;
+  line-height: 1.1;
+}
+
+.metric-data span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Admin Tables */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 1rem 1.25rem;
+  background: rgba(11, 25, 44, 0.8);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Status Badges & Select Box */
+.status-select {
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Slot Occupancy Visualizer */
+.occupancy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.occupancy-card {
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+}
+
+.occupancy-cars {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.car-bay {
+  flex: 1;
+  padding: 1rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: rgba(11, 25, 44, 0.6);
+  border: 1.5px dashed var(--border-color);
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.car-bay.occupied {
+  border-style: solid;
+  border-color: var(--accent-sky);
+  background: var(--accent-sky-light);
+  color: var(--accent-sky);
+}
+
+@media (max-width: 992px) {
+  .admin-sidebar {
+    width: 70px;
+    padding: 1rem 0.5rem;
+  }
+  .admin-sidebar span, .logo span {
+    display: none;
+  }
+  .admin-main {
+    margin-left: 70px;
+  }
+}

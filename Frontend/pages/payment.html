@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPI QR Code Payment | Rudra Doorstep Express</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .payment-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 4.5rem - 70px);
+      padding: 2rem 0;
+      width: 100%;
+    }
+    .payment-container {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .qr-card {
+      background: #FFFFFF;
+      border: 2px solid var(--accent-yellow);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(217, 119, 6, 0.15);
+      position: relative;
+    }
+    .qr-image-wrapper {
+      width: 220px;
+      height: 220px;
+      margin: 1rem auto;
+      padding: 10px;
+      background: #FFFFFF;
+      border: 2px solid var(--accent-yellow);
+      border-radius: var(--radius-md);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+    .qr-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      display: block;
+    }
+    .upi-apps-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+    }
+    .upi-copy-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #DFE6ED;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin: 0.75rem 0;
+    }
+
+    /* Mobile specific responsiveness (< 992px) */
+    @media (max-width: 991px) {
+      .payment-section {
+        padding: 1.5rem 0;
+        min-height: auto;
+      }
+      .payment-grid {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+      }
+      .btn-pay-now-mobile {
+        display: flex !important;
+      }
+    }
+
+    /* Desktop layout (>= 992px) */
+    @media (min-width: 992px) {
+      .btn-pay-now-mobile {
+        display: none !important;
+      }
+    }
+
+    /* Printable Receipt Modal */
+    @media print {
+      body * { visibility: hidden; }
+      #printable-receipt, #printable-receipt * { visibility: visible; }
+      #printable-receipt { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SINGLE HIGH-VISIBILITY LOGO BACKGROUND WATERMARK -->
+  <div class="animated-logo-bg-layer">
+    <img src="../images/logo 1.jpeg" class="single-center-bg-logo" alt="Rudra Logo Background">
+  </div>
+
+  <!-- Responsive Header Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+        <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="reviews.html" class="nav-link">Reviews</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="booking.html" class="btn btn-yellow btn-sm"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+        <button class="mobile-toggle" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-menu">
+    <div>
+      <div class="mobile-menu-header">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+          <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+        </a>
+        <button class="mobile-menu-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="mobile-nav-links">
+        <a href="../index.html" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="about.html" class="mobile-nav-link"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="services.html" class="mobile-nav-link"><i class="fa-solid fa-soap"></i> Services</a>
+        <a href="pricing.html" class="mobile-nav-link"><i class="fa-solid fa-tag"></i> Pricing</a>
+        <a href="gallery.html" class="mobile-nav-link"><i class="fa-solid fa-images"></i> Gallery</a>
+        <a href="booking.html" class="mobile-nav-link"><i class="fa-solid fa-calendar-plus"></i> Book Slot</a>
+        <a href="reviews.html" class="mobile-nav-link"><i class="fa-solid fa-star"></i> Reviews</a>
+        <a href="contact.html" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact</a>
+        <a href="login.html" class="mobile-nav-link" style="color: var(--primary-dark-slate);"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        <a href="booking.html" class="mobile-nav-link" style="color: var(--accent-yellow);"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+      </div>
+    </div>
+    <div>
+      <a href="tel:6300619133" class="btn btn-yellow btn-block" style="margin-bottom: 0.5rem;"><i class="fa-solid fa-phone"></i> Call 6300619133</a>
+      <a href="booking.html" class="btn btn-primary btn-block"><i class="fa-solid fa-calendar-check"></i> Book Doorstep Wash</a>
+    </div>
+  </div>
+  <div class="backdrop"></div>
+
+  <!-- Perfectly Centered Main Payment Section -->
+  <section class="payment-section">
+    <div class="container payment-container">
+
+      <div class="text-center" style="margin-bottom: 1.5rem;">
+        <div class="section-tag"><i class="fa-solid fa-qrcode"></i> SECURE UPI GATEWAY</div>
+        <h2 class="section-title">Scan & Pay to Confirm Booking</h2>
+        <p class="section-subtitle">Use Google Pay, PhonePe, Paytm, or any UPI app to complete instant payment.</p>
+      </div>
+
+      <div class="payment-grid">
+        
+        <!-- LEFT: BOOKING SUMMARY CARD -->
+        <div class="card-glass">
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;" class="text-yellow">
+            <i class="fa-solid fa-receipt me-2"></i> Booking Summary
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.88rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Booking Reference:</span>
+              <strong id="summary-booking-id" style="color: var(--brand-orange);">Loading...</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Customer Name:</span>
+              <strong id="summary-customer-name">Loading...</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Mobile Number:</span>
+              <strong id="summary-phone">Loading...</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Vehicle Model & No.:</span>
+              <strong id="summary-vehicle">Loading...</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Selected Package:</span>
+              <strong id="summary-service">Loading...</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Appointment Slot:</span>
+              <strong id="summary-slot">Loading...</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Doorstep Address:</span>
+              <span id="summary-address" style="font-size: 0.8rem; font-weight: 600; text-align: right; max-width: 200px;">Loading...</span>
+            </div>
+
+            <div style="border-top: 2px dashed var(--border-color); margin-top: 0.5rem; padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 1rem; font-weight: 700; color: var(--text-main);">Total Payable Amount:</span>
+              <span id="summary-amount" style="font-size: 1.6rem; font-family: var(--font-heading); font-weight: 800; color: var(--accent-green);">₹0</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.25rem; background: var(--accent-yellow-light); border: 1px solid var(--accent-yellow); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.78rem; color: var(--text-main);">
+            <i class="fa-solid fa-shield-halved text-warning me-1"></i> <strong>100% Satisfaction Guarantee:</strong> Money is safely held until the van crew completes your wash.
+          </div>
+        </div>
+
+        <!-- RIGHT: QR CODE / MOBILE UPI PAYMENT BOX -->
+        <div class="qr-card">
+          
+          <h4 style="font-size: 1.1rem; color: var(--primary-dark-slate); font-family: var(--font-heading); text-transform: uppercase;" id="display-merchant-name">
+            Rudra Doorstep Express Car Wash
+          </h4>
+          <p style="font-size: 0.78rem; color: var(--text-muted);">Official Business UPI Merchant</p>
+
+          <!-- CROPPED PHONEPE PAYMENT QR CODE (Visible on BOTH Desktop & Mobile) -->
+          <div class="qr-image-wrapper" id="desktop-qr-container">
+            <img id="qr-code-img" src="../assets/images/payment/phonepe-qr-cropped.png" alt="Cropped PhonePe Payment QR Code">
+          </div>
+
+          <div class="upi-copy-box">
+            <span>UPI ID: <strong id="upi-id-text">7032446215-5@ibl</strong></span>
+            <button class="btn btn-secondary btn-sm" onclick="copyUpiId()" style="padding: 2px 8px; font-size: 0.72rem;"><i class="fa-regular fa-copy"></i> Copy</button>
+          </div>
+
+          <div class="upi-apps-row" id="desktop-upi-icons">
+            <i class="fa-brands fa-google-pay" title="Google Pay" style="color: #4285F4;"></i>
+            <i class="fa-solid fa-mobile-screen-button" title="PhonePe" style="color: #5f259f;"></i>
+            <i class="fa-solid fa-wallet" title="Paytm" style="color: #00baf2;"></i>
+            <i class="fa-solid fa-building-columns" title="BHIM UPI" style="color: #f37023;"></i>
+          </div>
+
+          <!-- MOBILE ONLY: PAY NOW BUTTON BELOW QR CODE (Visible < 992px) -->
+          <a id="btn-mobile-pay-now" href="#" class="btn btn-yellow btn-block btn-lg btn-pay-now-mobile" style="margin-top: 1.25rem; justify-content: center; align-items: center; font-size: 1.1rem; font-weight: 800; text-transform: uppercase;">
+            <i class="fa-solid fa-bolt me-1"></i> PAY NOW (<span id="pay-now-btn-amount">₹0</span>)
+          </a>
+
+          <!-- PREMIUM MODERN PAYMENT INSTRUCTIONS CARD (Desktop & Mobile) -->
+          <div class="payment-instructions-card" style="margin-top: 1.25rem; background: #F8FAFC; border: 1.5px solid var(--brand-orange, #FF6B00); border-radius: 16px; padding: 1.25rem 1rem; text-align: center; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.06);">
+            
+            <h5 style="font-family: var(--font-heading); font-size: 0.88rem; font-weight: 800; color: var(--primary-dark-slate); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <i class="fa-solid fa-list-check" style="color: var(--brand-orange, #FF6B00);"></i> PAYMENT INSTRUCTIONS
+            </h5>
+
+            <!-- STEP 1 -->
+            <div style="background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 12px; padding: 0.9rem; margin-bottom: 0.75rem; text-align: center;">
+              <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 107, 0, 0.1); color: var(--brand-orange, #FF6B00); font-family: var(--font-heading); font-size: 0.78rem; font-weight: 800; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em;">
+                📱 STEP 1
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-main); font-weight: 600; margin: 6px 0 0 0; line-height: 1.45;">
+                Scan the QR Code using any UPI App<br>
+                <span style="font-size: 0.76rem; color: var(--text-muted); font-weight: 500;">(Google Pay, PhonePe, Paytm, BHIM)</span><br>
+                and complete your payment successfully.
+              </p>
+            </div>
+
+            <!-- STEP 2 -->
+            <div style="background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 12px; padding: 0.9rem; text-align: center;">
+              <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(34, 197, 94, 0.12); color: #16a34a; font-family: var(--font-heading); font-size: 0.78rem; font-weight: 800; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em;">
+                ✅ STEP 2
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-main); font-weight: 600; margin: 6px 0 0 0; line-height: 1.45;">
+                Once the payment is successful,<br>
+                click the button below to notify us.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- MANUAL PAYMENT COMPLETED BUTTON -->
+          <button id="btn-payment-done" class="btn btn-yellow btn-block btn-lg" style="margin-top: 1rem; justify-content: center; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; border-radius: 12px; letter-spacing: 0.04em; padding: 0.85rem 1rem;" onclick="showPaymentSubmittedModal()">
+            <i class="fa-solid fa-circle-check me-2"></i> ✓ I'VE COMPLETED THE PAYMENT
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MANUAL PAYMENT SUBMITTED VERIFICATION MODAL -->
+  <div class="modal-overlay" id="modal-payment-submitted" style="display: none; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10,17,31,0.75); z-index: 9999;">
+    <div class="modal-card text-center" style="max-width: 480px; padding: 2.25rem; background: #FFFFFF; border-radius: var(--radius-lg); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+      <div style="width: 68px; height: 68px; background: rgba(34, 197, 94, 0.15); color: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1.25rem auto;">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 style="font-size: 1.35rem; margin-bottom: 0.85rem; color: var(--primary-dark-slate); font-family: var(--font-heading);">Booking Received!</h3>
+      <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.75rem;">
+        Thank you! Your booking has been received successfully.<br>
+        Your payment will be verified manually by our team.<br>
+        Once verified, your booking will be confirmed.
+      </p>
+      <div style="display: flex; gap: 0.75rem;">
+        <a href="../index.html" class="btn btn-yellow btn-block"><i class="fa-solid fa-house"></i> Home Page</a>
+        <button class="btn btn-secondary btn-block" onclick="closePaymentSubmittedModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECEIPT & INVOICE MODAL (Appears after successful verification) -->
+  <div class="modal-overlay" id="modal-receipt" style="margin:auto">
+    <div class="modal-card" style="max-width: 580px; position: relative;">
+      
+      <div id="printable-receipt" style="padding: 0.5rem;">
+        
+        <!-- Receipt Header -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--accent-yellow); padding-bottom: 1rem; margin-bottom: 1rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800;">
+              <img src="../images/logo 1.jpeg" alt="Rudra Logo" style="width: 36px; height: 36px; border-radius: 50%;">
+              <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+            </div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+              Doorstep Car Wash & Detailing Service<br>
+              Lenin Nagar, Narasaraopet (522601) | Phone: 6300619133
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <div style="background: var(--accent-green); color: #FFF; font-family: var(--font-heading); font-weight: 800; font-size: 0.85rem; padding: 4px 12px; border-radius: 4px; display: inline-block; text-transform: uppercase;">
+              PAID & CONFIRMED ✅
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;" id="receipt-date-stamp">Date: July 30, 2026</div>
+          </div>
+        </div>
+
+        <!-- Receipt Body Details -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; margin-bottom: 1.25rem;">
+          <div>
+            <div style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 700;">Customer Details:</div>
+            <strong id="receipt-cust-name">Rajesh Kumar</strong><br>
+            <span id="receipt-cust-phone">+91 98765 43210</span><br>
+            <span id="receipt-cust-vehicle" style="font-weight: 700; color: var(--brand-orange);">Swift (AP 07 BK 1234)</span>
+          </div>
+
+          <div>
+            <div style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 700;">Transaction Details:</div>
+            <span>Transaction ID: <strong id="receipt-txn-id">TXN-UPI-984210</strong></span><br>
+            <span>Booking ID: <strong id="receipt-booking-id">RCW-9026</strong></span><br>
+            <span>Method: <strong>UPI Direct / QR Code</strong></span>
+          </div>
+        </div>
+
+        <!-- Itemized Table -->
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1.25rem;">
+          <thead>
+            <tr style="background: #DFE6ED; color: var(--primary-dark-slate); font-family: var(--font-heading); font-size: 0.8rem;">
+              <th style="padding: 6px 10px; text-align: left;">SERVICE DESCRIPTION</th>
+              <th style="padding: 6px 10px; text-align: center;">SLOT TIME</th>
+              <th style="padding: 6px 10px; text-align: right;">AMOUNT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 8px 10px; border-bottom: 1px solid var(--border-color);" id="receipt-service-title">Foam Wash + Interior Vacuum</td>
+              <td style="padding: 8px 10px; border-bottom: 1px solid var(--border-color); text-align: center;" id="receipt-slot-time">Tomorrow, 10:00 AM</td>
+              <td style="padding: 8px 10px; border-bottom: 1px solid var(--border-color); text-align: right; font-weight: 700;" id="receipt-service-price">₹500.00</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2" style="padding: 8px 10px; text-align: right; font-weight: 700;">TOTAL PAID:</td>
+              <td style="padding: 8px 10px; text-align: right; font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--accent-green);" id="receipt-total-paid">₹500.00</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div style="text-align: center; font-size: 0.78rem; color: var(--text-muted); border-top: 1px dashed var(--border-color); padding-top: 0.75rem;">
+          Thank you for choosing Rudra Doorstep Express Car Wash! Our doorstep van crew will arrive at your location punctually.
+        </div>
+
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
+        <button class="btn btn-secondary btn-block" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Invoice</button>
+        <button class="btn btn-yellow btn-block" onclick="document.getElementById('modal-receipt').classList.remove('active')"><i class="fa-solid fa-check"></i> Done</button>
+        <a href="https://wa.me/916300619133?text=Hi%20Rudra%20Car%20Wash,%20I%20have%20a%20question%20about%20my%20booking" target="_blank" class="btn btn-secondary" style="background: #25D366; color: #FFF; border: none; font-size: 1.1rem; padding: 0.5rem 1rem;" title="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Unified Luxury Main Website Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Company Information -->
+        <div class="footer-brand">
+          <a href="../index.html" class="logo">
+            <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img">
+            <span>RUDRA <span class="text-yellow">DOORSTEP EXPRESS CAR WASH</span></span>
+          </a>
+          <p>Rudra Doorstep Express Car Wash in Narasaraopet. Mobile wash van service at your Home, Office, or Society.</p>
+          
+          <div class="footer-contact-pills">
+            <a href="tel:6300619133" class="footer-contact-pill phone-pill">
+              <i class="fa-solid fa-phone"></i> Hotline: 6300619133
+            </a>
+            <a href="https://www.instagram.com/rudra_door_step_express_wash?utm_source=qr" target="_blank" class="footer-contact-pill insta-pill">
+              <i class="fa-brands fa-instagram"></i> INSTAGRAM
+            </a>
+          </div>
+        </div>
+
+        <!-- Wash Packages -->
+        <div class="footer-col">
+          <h4>Wash Packages</h4>
+          <div class="footer-links">
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Foam & Water Wash (₹400)</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Foam Wash + Vacuum (₹500)</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Full Interior & Tyre Polish (₹600)</a>
+          </div>
+        </div>
+
+        <!-- Quick Links / Customer Navigation -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="../index.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Home</a>
+            <a href="about.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> About Us</a>
+            <a href="services.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Services</a>
+            <a href="pricing.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Pricing</a>
+            <a href="booking.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Book Doorstep Slot</a>
+            <a href="reviews.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Customer Reviews</a>
+            <a href="contact.html"><i class="fa-solid fa-angle-right" style="font-size: 0.65rem;"></i> Contact & Support</a>
+          </div>
+        </div>
+
+        <!-- Contact & Location Map -->
+        <div class="footer-col footer-map-col">
+          <h4>Location & Address</h4>
+          <div class="footer-map-address">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-red); margin-top: 2px;"></i>
+            <span>Pedda Cheruvu, Lenin Nagar, Narasaraopet (522601)</span>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Pedda+Cheruvu+Lenin+Nagar+Narasaraopet+Andhra+Pradesh+522601" target="_blank" class="footer-map-wrapper" title="Click to view exact Google Maps location">
+            <iframe src="https://maps.google.com/maps?q=Pedda%20Cheruvu%20Lenin%20Nagar%20Narasaraopet%20Andhra%20Pradesh%20522601&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100" style="border:0; pointer-events: none;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="map-click-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Google Maps</div>
+          </a>
+        </div>
+
+      </div>
+
+            <!-- Footer Bottom Copyright & Premium ElevateIQ Developer Branding -->
+      <div class="footer-bottom-branding">
+        <div class="footer-copyright-text">
+          © 2026 Rudra Doorstep Express Car Wash. All Rights Reserved.
+        </div>
+        <div class="elevateiq-developer-credit">
+          <span class="developer-label">Developed & Maintained By</span>
+          <span class="developer-brand-text">ElevateIQ Soft Tech</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    let bookingId = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      bookingId = urlParams.get('booking_id') || urlParams.get('id');
+
+      if (bookingId) {
+        await loadBookingDetails(bookingId);
+      } else {
+        setupMockupPayment();
+      }
+    });
+
+    async function loadBookingDetails(id) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/bookings/${id}/`);
+        if (response.ok) {
+          const b = await response.json();
+          renderPaymentData({
+            id: b.id,
+            name: b.full_name || (b.user ? b.user.email : 'Customer'),
+            phone: b.phone || 'N/A',
+            vehicle: `${b.vehicle_model || 'Car'} (${b.vehicle_number || ''})`,
+            service: b.service ? b.service.name : 'Doorstep Car Wash',
+            slot: `${b.booking_date} ${b.booking_time}`,
+            address: b.address || 'Narasaraopet',
+            amount: parseFloat(b.total_price || 0),
+            qr_url: b.payment ? b.payment.upi_qr_url : null,
+            merchant_upi_id: b.merchant_upi_id || (b.payment ? b.payment.upi_id : null),
+            merchant_name: b.merchant_name || 'Rudra Doorstep Express',
+            upi_deep_link: b.upi_deep_link || (b.payment ? b.payment.upi_deep_link : null),
+            status: b.payment_status || b.status
+          });
+          return;
+        }
+      } catch (err) {
+        console.warn("Failed to fetch booking API:", err);
+      }
+      setupMockupPayment();
+    }
+
+    function renderPaymentData(b) {
+      // Validate Booking Amount > 0
+      const numAmount = parseFloat(b.amount || 0);
+      if (isNaN(numAmount) || numAmount <= 0) {
+        showToast("Invalid payment amount detected. Please contact support.", "error");
+      }
+
+      document.getElementById('summary-booking-id').innerText = `RCW-${b.id}`;
+      document.getElementById('summary-customer-name').innerText = b.name;
+      document.getElementById('summary-phone').innerText = b.phone;
+      document.getElementById('summary-vehicle').innerText = b.vehicle;
+      document.getElementById('summary-service').innerText = b.service;
+      document.getElementById('summary-slot').innerText = b.slot;
+      document.getElementById('summary-address').innerText = b.address;
+      document.getElementById('summary-amount').innerText = `₹${numAmount}`;
+
+      // Populate Merchant UPI ID & Name dynamically from backend environment variables
+      const upiId = b.merchant_upi_id || '7032446215-5@ibl';
+      const merchantName = b.merchant_name || 'Rudra Doorstep Express';
+      document.getElementById('upi-id-text').innerText = upiId;
+      document.getElementById('display-merchant-name').innerText = merchantName;
+
+      // Construct Standard upi://pay Deep Link dynamically using backend values & validated amount
+      const encodedMerchant = encodeURIComponent(merchantName);
+      const upiDeepLink = b.upi_deep_link || `upi://pay?pa=${upiId}&pn=${encodedMerchant}&am=${numAmount.toFixed(2)}&cu=INR&tn=Booking-${b.id}`;
+
+      // Ensure QR Code Image wrapper & App Icons are ALWAYS visible on BOTH Desktop & Mobile
+      const desktopQr = document.getElementById('desktop-qr-container');
+      const desktopUpiIcons = document.getElementById('desktop-upi-icons');
+
+      if (desktopQr) desktopQr.style.display = 'block';
+      if (desktopUpiIcons) desktopUpiIcons.style.display = 'flex';
+
+      // Mobile Pay Now Button Handler
+      const btnPayNow = document.getElementById('btn-mobile-pay-now');
+      const payNowAmount = document.getElementById('pay-now-btn-amount');
+      if (payNowAmount) payNowAmount.innerText = `₹${numAmount}`;
+
+      if (btnPayNow) {
+        btnPayNow.href = upiDeepLink;
+        btnPayNow.onclick = (e) => {
+          e.preventDefault();
+
+          if (!upiDeepLink || numAmount <= 0) {
+            showToast("Invalid payment details or amount. Cannot initiate payment.", "error");
+            return;
+          }
+
+          // Launch installed UPI app directly
+          window.location.href = upiDeepLink;
+        };
+      }
+
+      // Populate Receipt Modal
+      document.getElementById('receipt-cust-name').innerText = b.name;
+      document.getElementById('receipt-cust-phone').innerText = b.phone;
+      document.getElementById('receipt-cust-vehicle').innerText = b.vehicle;
+      document.getElementById('receipt-booking-id').innerText = `RCW-${b.id}`;
+      document.getElementById('receipt-service-title').innerText = b.service;
+      document.getElementById('receipt-slot-time').innerText = b.slot;
+      document.getElementById('receipt-service-price').innerText = `₹${numAmount}.00`;
+      document.getElementById('receipt-total-paid').innerText = `₹${numAmount}.00`;
+    }
+
+    function setupMockupPayment() {
+      renderPaymentData({
+        id: "9026",
+        name: "Rajesh Kumar",
+        phone: "+91 98765 43210",
+        vehicle: "Swift (AP 07 BK 1234)",
+        service: "Foam Wash + Interior Vacuum",
+        slot: "Tomorrow, 10:00 AM",
+        address: "Lenin Nagar, Narasaraopet",
+        amount: 500,
+        merchant_upi_id: "7032446215-5@ibl",
+        merchant_name: "Rudra Doorstep Express"
+      });
+    }
+
+    function copyUpiId() {
+      const upiText = document.getElementById('upi-id-text').innerText;
+      navigator.clipboard.writeText(upiText);
+      showToast("UPI ID copied to clipboard!", "success");
+    }
+
+    function showPaymentSubmittedModal() {
+      const modal = document.getElementById('modal-payment-submitted');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closePaymentSubmittedModal() {
+      const modal = document.getElementById('modal-payment-submitted');
+      if (modal) modal.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

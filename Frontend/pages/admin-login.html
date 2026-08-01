@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal Access | Rudra Doorstep Express</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--primary-bg);">
+
+  <!-- SINGLE HIGH-VISIBILITY LOGO BACKGROUND WATERMARK -->
+  <div class="animated-logo-bg-layer">
+    <img src="../images/logo 1.jpeg" class="single-center-bg-logo" alt="Rudra Logo Background">
+  </div>
+
+  <div class="auth-container" style="margin: 0; width: 100%; max-width: 400px; padding: 1rem; position: relative; z-index: 10;">
+    <div class="card-glass text-center" style="border: 1.5px solid var(--accent-yellow);">
+      
+      <button onclick="history.back()" class="btn-back-nav" style="margin-bottom: 1rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+
+      <div style="width: 54px; height: 54px; border-radius: 50%; background: var(--accent-yellow-light); color: var(--accent-yellow); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 0.85rem auto;">
+        <img src="../images/logo 1.jpeg" alt="Rudra Logo" class="logo-img" style="width: 44px; height: 44px;">
+      </div>
+
+      <h2 style="font-size: 1.5rem; margin-bottom: 0.2rem; color: var(--primary-dark-slate);">Rudra Admin Portal</h2>
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1.25rem;">Superuser & Admin Authentication</p>
+
+      <form id="admin-login-form" style="text-align: left;">
+        <div class="form-group">
+          <label class="form-label" for="admin-email">Admin / Superuser Email</label>
+          <input type="email" id="admin-email" class="form-control" placeholder="admin@carwash.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="admin-password">Security Password</label>
+          <input type="password" id="admin-password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-yellow btn-block" style="margin-top: 1.25rem;">
+          <i class="fa-solid fa-lock-open"></i> Unlock Admin Dashboard
+        </button>
+      </form>
+
+      <div style="margin-top: 1.25rem; padding-top: 0.85rem; border-top: 1px solid var(--border-color);">
+        <p style="font-size: 0.78rem; color: var(--text-muted);">Django Superuser Credentials Only</p>
+        <small style="color: var(--text-subtle);">Created via <code>python manage.py createsuperuser</code></small>
+      </div>
+
+      <div style="margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 0.85rem; text-align: center;">
+        <div class="developer-label" style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Developed & Maintained By</div>
+        <span class="developer-brand-text">ElevateIQ Soft Tech</span>
+      </div>
+  </div>
+
+  <script src="../js/store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('admin-email').value;
+      const pass = document.getElementById('admin-password').value;
+
+      const res = await Auth.adminLogin(email, pass);
+      if (res.success) {
+        showToast('Superuser access granted! Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = '../admin/dashboard.html';
+        }, 600);
+      } else {
+        showToast(res.message || 'Access Denied. Admin privileges required.', 'error');
+      }
+    });
+  </script>
+</body>
+</html>

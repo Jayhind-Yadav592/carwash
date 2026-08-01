@@ -1,0 +1,461 @@
+/* ==========================================================================
+   PAGE-SPECIFIC STYLES & RESPONSIVE CENTERED LAYOUT ENGINE
+   ========================================================================== */
+
+/* Page Banner Header */
+.page-banner {
+  position: relative;
+  padding: 6.25rem 0 2.25rem 0;
+  background: #0A111F;
+  border-bottom: 2px solid var(--accent-yellow);
+  text-align: center;
+  overflow: hidden;
+}
+
+.page-banner-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  z-index: 0;
+  filter: contrast(1.1) brightness(0.95);
+}
+
+.page-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(10, 17, 31, 0.42) 0%, rgba(10, 17, 31, 0.75) 100%);
+  z-index: 1;
+}
+
+.page-banner .container {
+  position: relative;
+  z-index: 2;
+}
+
+.page-banner h1 {
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+  margin-bottom: 0.35rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  color: #E2E8F0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.breadcrumb a {
+  color: #E2E8F0;
+  font-weight: 600;
+}
+
+.breadcrumb a:hover {
+  color: var(--accent-yellow);
+}
+
+/* Pricing & Services Cards - Responsive & Center Aligned */
+.pricing-card, .service-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 1.1rem;
+  background: #F8FAFC;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.pricing-header h3, .service-card h3 {
+  font-size: 1.1rem;
+  line-height: 1.25;
+  color: var(--text-main);
+}
+
+.pricing-price {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--accent-yellow);
+  margin: 0.3rem 0;
+}
+
+.pricing-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pricing-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.pricing-feature i {
+  color: var(--accent-yellow);
+  font-size: 0.75rem;
+}
+
+/* Interactive Package Selector Cards on Booking Page */
+.booking-pkg-card {
+  background: #FFFFFF;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  text-align: center;
+}
+
+.booking-pkg-card:hover {
+  border-color: var(--accent-yellow);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.15);
+}
+
+.booking-pkg-card.active-pkg {
+  border-color: var(--accent-yellow);
+  background: var(--accent-yellow-light);
+  box-shadow: 0 0 15px rgba(217, 119, 6, 0.25);
+}
+
+.booking-pkg-card.active-pkg::after {
+  content: '\f00c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 22px;
+  height: 22px;
+  background: var(--accent-yellow);
+  color: #FFFFFF;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Booking Page Form Fields */
+.form-group {
+  margin-bottom: 0.85rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-md);
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.15);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+/* SLOT AVAILABILITY COLOR STATUS CARDS (GREEN VS RED FULL LOGIC) */
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.65rem;
+  justify-content: center;
+}
+
+.slot-card {
+  padding: 0.65rem 0.5rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slot-card.available {
+  background: var(--status-green-light);
+  border: 2px solid var(--status-green);
+  color: #14532D;
+}
+
+.slot-card.available:hover {
+  background: rgba(22, 163, 74, 0.22);
+  transform: translateY(-2px);
+}
+
+.slot-card.selected {
+  background: var(--accent-yellow) !important;
+  border-color: #B45309 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+}
+
+.slot-card.selected .slot-time {
+  color: #FFFFFF !important;
+}
+
+.slot-card.selected .slot-status-badge {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+/* FULL CAPACITY RED CARDS LOGIC */
+.slot-card.full {
+  background: rgba(220, 38, 38, 0.14) !important;
+  border: 2px solid #DC2626 !important;
+  color: #DC2626 !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+}
+
+.slot-card.full .slot-time {
+  color: #DC2626 !important;
+}
+
+.slot-card.full .slot-status-badge {
+  background: #DC2626 !important;
+  color: #FFFFFF !important;
+}
+
+.slot-time {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.slot-status-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.badge-green {
+  background: #16A34A;
+  color: #FFFFFF;
+}
+
+.badge-red {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+/* Status Progress Tracker */
+.status-tracker-card {
+  background: #F8FAFC;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--card-shadow);
+}
+
+.status-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.status-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  width: 25%;
+  text-align: center;
+}
+
+.step-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #DFE6ED;
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.status-step.completed .step-icon, .status-step.active .step-icon {
+  background: var(--accent-yellow);
+  color: #FFFFFF;
+  border-color: var(--accent-yellow);
+}
+
+.step-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Reviews List */
+.review-card {
+  padding: 0.85rem;
+  border-radius: var(--radius-md);
+  background: #F8FAFC;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 0.75rem;
+}
+
+.review-author {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.review-stars {
+  color: var(--accent-yellow);
+  font-size: 0.75rem;
+}
+
+.review-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
+
+/* Admin Dashboard Table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.admin-table th, .admin-table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table th {
+  background: #DFE6ED;
+  color: var(--primary-dark-slate);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+/* MOBILE RESPONSIVE PRICING & CARDS ENGINE (MAX-WIDTH: 768PX) */
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    padding: 0 0.25rem;
+  }
+
+  .pricing-card {
+    width: 100% !important;
+    padding: 1.25rem !important;
+    text-align: center !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .pricing-card-img-wrapper {
+    height: 160px !important;
+    width: 100% !important;
+    border-radius: var(--radius-md) !important;
+    overflow: hidden !important;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .pricing-card-img-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+  }
+
+  .pricing-features {
+    align-items: center !important;
+    width: 100%;
+  }
+
+  .pricing-feature {
+    justify-content: center !important;
+  }
+}
+
+/* MOBILE RESPONSIVE CENTERED ALIGNMENTS */
+@media (max-width: 640px) {
+  .slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .booking-pkg-card {
+    padding: 0.75rem;
+    text-align: center;
+  }
+
+  .pricing-card, .service-card {
+    text-align: center;
+    align-items: center;
+  }
+
+  .pricing-features {
+    align-items: center;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
