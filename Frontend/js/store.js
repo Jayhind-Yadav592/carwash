@@ -12,41 +12,7 @@ const STORAGE_KEYS = {
   NOTIFICATIONS: 'rudra_notifications_v4'
 };
 
-const DEFAULT_SERVICES = [
-  {
-    id: 'srv-foam-water',
-    title: 'Foam & Water Wash',
-    category: 'Doorstep Package 1',
-    price: 400,
-    duration: '45 mins',
-    description: 'High-pressure foam wash, pressure water rinse, wheel rim cleaning & microfiber hand dry at your doorstep.',
-    icon: 'fa-soap',
-    badge: 'Standard Wash',
-    image: '../images/car 10.jpeg'
-  },
-  {
-    id: 'srv-foam-vacuum',
-    title: 'Water & Foam Wash + Vacuum',
-    category: 'Doorstep Package 2',
-    price: 500,
-    duration: '60 mins',
-    description: 'Foam & pressure water exterior wash plus complete cabin & trunk vacuum cleaning.',
-    icon: 'fa-sparkles',
-    badge: 'Best Value',
-    image: '../images/car 12.png'
-  },
-  {
-    id: 'srv-complete-spa',
-    title: 'Complete Wash + Vacuum + Interior + Tyre Polish',
-    category: 'Doorstep Package 3',
-    price: 600,
-    duration: '75 mins',
-    description: 'Complete foam & water wash, full interior sanitization, dashboard dressing, seat steam cleaning & deep black tyre polish.',
-    icon: 'fa-crown',
-    badge: 'Full Spa',
-    image: '../images/car 16.png'
-  }
-];
+
 
 const Store = {
   init() {
@@ -87,9 +53,9 @@ const Store = {
         }
       }
     } catch (err) {
-      console.warn('API getServices failed, using default services:', err);
+      console.warn('API getServices failed:', err);
     }
-    return DEFAULT_SERVICES;
+    return [];
   },
 
   async getBookings() {
