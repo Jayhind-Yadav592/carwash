@@ -4,8 +4,8 @@ services:
     runtime: python
     plan: free
 
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn carwash_backend.wsgi:application"
+    buildCommand: "cd carwash_backend && chmod +x build.sh && ./build.sh"
+    startCommand: "cd carwash_backend && gunicorn carwash_backend.wsgi:application"
 
     envVars:
       - key: DEBUG
