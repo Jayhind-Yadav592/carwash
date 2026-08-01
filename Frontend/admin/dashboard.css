@@ -532,9 +532,15 @@ body.admin-body {
 /* KPI Cards Grid */
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
   margin-bottom: 1.75rem;
+}
+
+@media (min-width: 1600px) {
+  .kpi-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 .kpi-card {
