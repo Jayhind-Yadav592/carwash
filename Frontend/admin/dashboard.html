@@ -267,38 +267,7 @@
                 <span class="badge badge-confirmed"><i class="fa-solid fa-circle-dot fa-spin"></i> Live Feed</span>
               </div>
               <div id="activity-stream-container" style="display: flex; flex-direction: column; gap: 0.85rem; max-height: 280px; overflow-y: auto;">
-                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem; background: #F8FAFC; border-radius: var(--radius-md); border-left: 3px solid var(--accent-green);">
-                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-green-light); color: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
-                    <i class="fa-solid fa-circle-check"></i>
-                  </div>
-                  <div>
-                    <strong style="font-size: 0.82rem; color: var(--text-main);">UPI Payment Verified (RCW-9026)</strong>
-                    <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1px;">Rajesh Kumar paid ₹500 via Google Pay. Receipt issued.</p>
-                    <span style="font-size: 0.68rem; color: var(--text-subtle); font-weight: 700;">2 mins ago</span>
-                  </div>
-                </div>
-
-                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem; background: #F8FAFC; border-radius: var(--radius-md); border-left: 3px solid var(--brand-orange);">
-                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--brand-orange-light); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
-                    <i class="fa-solid fa-truck-fast"></i>
-                  </div>
-                  <div>
-                    <strong style="font-size: 0.82rem; color: var(--text-main);">Mobile Van #1 Dispatched</strong>
-                    <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1px;">Crew lead Ramesh Babu en route to Lenin Nagar, Narasaraopet.</p>
-                    <span style="font-size: 0.68rem; color: var(--text-subtle); font-weight: 700;">14 mins ago</span>
-                  </div>
-                </div>
-
-                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.65rem; background: #F8FAFC; border-radius: var(--radius-md); border-left: 3px solid var(--accent-blue);">
-                  <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-blue-light); color: var(--accent-blue); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
-                    <i class="fa-solid fa-calendar-check"></i>
-                  </div>
-                  <div>
-                    <strong style="font-size: 0.82rem; color: var(--text-main);">New Guest Booking Received</strong>
-                    <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1px;">Customer booked Foam Wash + Interior Vacuum for 10:00 AM slot.</p>
-                    <span style="font-size: 0.68rem; color: var(--text-subtle); font-weight: 700;">28 mins ago</span>
-                  </div>
-                </div>
+                <!-- Dynamically populated from live notifications & bookings -->
               </div>
             </div>
 
@@ -309,32 +278,9 @@
                 <button class="btn btn-secondary btn-sm" onclick="switchTab('employees')"><i class="fa-solid fa-user-gear"></i> Manage Crew</button>
               </div>
               
-              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: #FFFFFF; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
-                  <div style="display: flex; align-items: center; gap: 0.65rem;">
-                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-green-light); color: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 1rem;">
-                      <i class="fa-solid fa-van-shuttle"></i>
-                    </div>
-                    <div>
-                      <strong style="font-size: 0.85rem; color: var(--text-main); display: block;">Van #1 (AP 07 EV 1001)</strong>
-                      <span style="font-size: 0.74rem; color: var(--text-muted);">Lead: Ramesh Babu (6300619133)</span>
-                    </div>
-                  </div>
-                  <span class="badge badge-completed"><i class="fa-solid fa-location-dot"></i> Active (Narasaraopet)</span>
-                </div>
-
-                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; background: #FFFFFF; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
-                  <div style="display: flex; align-items: center; gap: 0.65rem;">
-                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--brand-orange-light); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-size: 1rem;">
-                      <i class="fa-solid fa-van-shuttle"></i>
-                    </div>
-                    <div>
-                      <strong style="font-size: 0.85rem; color: var(--text-main); display: block;">Van #2 (AP 07 EV 1002)</strong>
-                      <span style="font-size: 0.74rem; color: var(--text-muted);">Lead: Suresh V. (9440123456)</span>
-                    </div>
-                  </div>
-                  <span class="badge badge-pending"><i class="fa-solid fa-clock"></i> Standby (HQ Station)</span>
-                </div>
+              <div id="van-fleet-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Dynamically populated from live active staff & services -->
+              </div>
 
                 <!-- Quick Action Buttons Row -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.25rem;">
@@ -475,7 +421,7 @@
             <div class="card-header">
               <div class="card-title"><i class="fa-solid fa-indian-rupee-sign" style="color: var(--accent-green);"></i> Revenue & Financial Performance</div>
             </div>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Total Revenue Collected: <strong style="color: var(--accent-green); font-size: 1.4rem;">₹25,200</strong></p>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Total Revenue Collected: <strong id="section-total-revenue" style="color: var(--accent-green); font-size: 1.4rem;">₹0</strong></p>
           </div>
         </section>
 
