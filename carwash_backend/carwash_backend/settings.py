@@ -54,7 +54,19 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
 ]
 
+class DisableCacheMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        response['Pragma'] = 'no-cache'
+        response['Expires'] = '0'
+        return response
+
 MIDDLEWARE = [
+    'carwash_backend.settings.DisableCacheMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # CORS Middleware
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -167,6 +179,8 @@ STATICFILES_DIRS = [
 if FRONTEND_DIR.exists():
     STATICFILES_DIRS.append(FRONTEND_DIR)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"    
+WHITENOISE_MAX_AGE = 0
+WHITENOISE_INDEX_FILE = True
 
 # Media files (Uploaded User Data)
 MEDIA_URL = '/media/'
