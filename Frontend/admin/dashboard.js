@@ -253,6 +253,14 @@ async function fetchLiveApiData() {
   }
 
   renderAllSections();
+  hideGlobalLoader();
+}
+
+function hideGlobalLoader() {
+  const loader = document.getElementById('dashboard-global-loader');
+  if (loader) {
+    loader.classList.add('hidden');
+  }
 }
 
 // Live Real-Time Admin Notification Polling
