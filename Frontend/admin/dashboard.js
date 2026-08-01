@@ -533,16 +533,15 @@ window.rejectBookingPayment = async function(rawId) {
   }
 };
 
-// Render Bookings Table with Payment & Transaction Details
 function renderBookingsTable() {
   const tbody = document.getElementById('bookings-table-tbody');
   const fullTbody = document.getElementById('full-bookings-tbody');
   
-  if (!tbody) return;
+  if (!tbody && !fullTbody) return;
 
   if (DashboardState.bookings.length === 0) {
     const emptyHTML = '<tr><td colspan="8" class="text-center p-4 text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.5rem; display: block;"></i>No Bookings Available</td></tr>';
-    tbody.innerHTML = emptyHTML;
+    if (tbody) tbody.innerHTML = emptyHTML;
     if (fullTbody) fullTbody.innerHTML = emptyHTML;
     return;
   }
@@ -595,7 +594,7 @@ function renderBookingsTable() {
     `;
   }).join('');
 
-  tbody.innerHTML = rowsHTML;
+  if (tbody) tbody.innerHTML = rowsHTML;
   if (fullTbody) fullTbody.innerHTML = rowsHTML;
 }
 
