@@ -66,7 +66,20 @@
 }
 
 /* Pricing & Services Cards - Responsive & Center Aligned */
-.pricing-card, .service-card {
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 !important;
+  background: #F8FAFC;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.service-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -112,16 +125,16 @@
   font-size: 0.75rem;
 }
 
-/* Premium Pricing Card Service Images */
+/* Premium Pricing Card Edge-to-Edge 16:9 Service Banner */
 .pricing-card-img-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 1rem;
-  box-shadow: 0 8px 24px rgba(10, 17, 31, 0.12);
+  margin: 0;
+  padding: 0;
   background: #0A111F;
+  border-radius: 0;
 }
 
 .pricing-card-img-wrapper img {
@@ -131,6 +144,14 @@
   object-position: center;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   display: block;
+}
+
+.pricing-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
 }
 
 /* Hover Zoom Effect - Desktop Only */
@@ -145,17 +166,20 @@
 @media (max-width: 768px) {
   .pricing-card-img-wrapper {
     aspect-ratio: 16 / 9;
-    border-radius: 14px;
-    margin-bottom: 0.85rem;
-    box-shadow: 0 6px 18px rgba(10, 17, 31, 0.1);
+    margin: 0;
+  }
+  .pricing-card-body {
+    padding: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .pricing-card-img-wrapper {
     aspect-ratio: 16 / 9;
-    border-radius: 12px;
-    margin-bottom: 0.75rem;
+    margin: 0;
+  }
+  .pricing-card-body {
+    padding: 0.9rem;
   }
 }
 
