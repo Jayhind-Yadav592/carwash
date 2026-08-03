@@ -21,7 +21,7 @@ print("Current service count:", Service.objects.count())
 DEFAULT_SERVICES = [
     {
         "name": "Foam & Water Wash",
-        "price": 400.00,
+        "price: 399.00,
         "duration": 45,
         "description": "High-pressure foam wash, pressure water rinse, wheel rim cleaning & microfiber hand dry at your doorstep.",
         "image": "../images/car 10.jpeg?v=2"
@@ -35,7 +35,7 @@ DEFAULT_SERVICES = [
     },
     {
         "name": "Complete Wash + Vacuum + Interior + Tyre Polish",
-        "price": 600.00,
+        "price: 599.00,
         "duration": 75,
         "description": "Complete foam & water wash, full interior sanitization, dashboard dressing, seat steam cleaning & deep black tyre polish.",
         "image": "../images/car 16.png?v=2"

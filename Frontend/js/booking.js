@@ -34,7 +34,7 @@ async function initBookingEngine() {
   dateInput.min = todayStr;
 
   const services = await Store.getServices();
-  let selectedPackage = services[0] || { id: 1, title: 'Standard Wash', price: 400 };
+  let selectedPackage = services[0] || { id: 1, title: 'Standard Wash', price: 399 };
 
   const urlParams = new URLSearchParams(window.location.search);
   const paramService = urlParams.get('service');

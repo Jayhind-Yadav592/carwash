@@ -652,12 +652,12 @@ function renderServicesGrid() {
     }
     const fallbackSrc = fallbackImageMap[idx % fallbackImageMap.length];
 
-    let priceFormatted = '400.00';
+    let priceFormatted = '399.00';
     const sName = (s.name || s.title || '').toLowerCase();
     if (sName.includes('complete') || sName.includes('interior') || sName.includes('tyre') || sName.includes('polish')) {
-      priceFormatted = '700.00';
+      priceFormatted = '699.00';
     } else if (sName.includes('vacuum')) {
-      priceFormatted = '600.00';
+      priceFormatted = '599.00';
     } else if (s.price) {
       priceFormatted = parseFloat(s.price).toFixed(2);
     }
