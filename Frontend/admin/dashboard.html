@@ -347,7 +347,7 @@
                 <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-layer-group" style="color: var(--brand-orange);"></i> Doorstep Wash Packages Catalog</h3>
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Manage service packages, pricing, durations, and images.</p>
               </div>
-              <button class="btn btn-yellow" onclick="showToast('Service Package Creation Enabled', 'info')"><i class="fa-solid fa-plus"></i> Add New Package</button>
+              <button class="btn btn-yellow" id="btn-add-service"><i class="fa-solid fa-plus"></i> Add New Package</button>
             </div>
           </div>
           <div class="services-grid" id="services-cards-grid">
@@ -363,6 +363,7 @@
                 <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-users" style="color: var(--brand-orange);"></i> Customer Directory & Loyalty Points</h3>
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">View registered customer accounts, contact details, and reward points.</p>
               </div>
+              <button class="btn btn-yellow" id="btn-add-customer"><i class="fa-solid fa-user-plus"></i> Add Customer</button>
             </div>
           </div>
           <div class="services-grid" id="customers-cards-grid">
@@ -391,7 +392,7 @@
                 <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-user-shield" style="color: var(--brand-orange);"></i> Mobile Van Crew & Technicians</h3>
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Manage doorstep service technicians, van leads, and shift statuses.</p>
               </div>
-              <button class="btn btn-yellow" onclick="showToast('Add Technician Form Ready', 'info')"><i class="fa-solid fa-user-plus"></i> Add Employee</button>
+              <button class="btn btn-yellow" id="btn-add-employee"><i class="fa-solid fa-user-plus"></i> Add Employee</button>
             </div>
           </div>
           <div class="services-grid" id="employees-cards-grid">
@@ -507,25 +508,105 @@
       <form id="form-create-booking">
         <div class="form-group" style="margin-bottom: 1rem;">
           <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Customer Name</label>
-          <input type="text" class="form-control" placeholder="Full Name" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+          <input type="text" id="input-booking-name" class="form-control" placeholder="Full Name" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
         </div>
         <div class="form-group" style="margin-bottom: 1rem;">
           <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Phone Number</label>
-          <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+          <input type="tel" id="input-booking-phone" class="form-control" placeholder="+91 XXXXX XXXXX" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
         </div>
         <div class="form-group" style="margin-bottom: 1rem;">
           <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Car Model & Number</label>
-          <input type="text" class="form-control" placeholder="Hyundai Creta (AP 07 BK 1234)" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+          <input type="text" id="input-booking-vehicle" class="form-control" placeholder="Hyundai Creta (AP 07 BK 1234)" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
         </div>
         <div class="form-group" style="margin-bottom: 1.25rem;">
           <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Select Wash Package</label>
-          <select class="form-control" style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
-            <option value="400">Foam & Water Wash (₹400)</option>
-            <option value="500">Water & Foam Wash + Vacuum (₹500)</option>
-            <option value="600">Full Interior & Polish (₹600)</option>
+          <select id="select-booking-service" class="form-control" style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+            <option value="1">Foam & Water Wash (₹400)</option>
+            <option value="2">Water & Foam Wash + Vacuum (₹500)</option>
+            <option value="3">Full Interior & Polish (₹600)</option>
           </select>
         </div>
         <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center;">Confirm & Save Booking</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT SERVICE MODAL -->
+  <div class="modal-overlay" id="modal-add-service">
+    <div class="modal-card">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 id="modal-service-title" style="color: var(--text-main); font-family: var(--font-heading); text-transform: uppercase;"><i class="fa-solid fa-soap" style="color: var(--brand-orange);"></i> Add New Wash Package</h3>
+        <button class="icon-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-create-service">
+        <input type="hidden" id="service-edit-id">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Package Name</label>
+          <input type="text" id="service-name" class="form-control" placeholder="e.g. Premium Foam & Polish" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Price (₹)</label>
+          <input type="number" id="service-price" class="form-control" placeholder="400" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Duration (minutes)</label>
+          <input type="number" id="service-duration" class="form-control" placeholder="45" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Description</label>
+          <textarea id="service-desc" class="form-control" rows="3" placeholder="Package features..." style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);"></textarea>
+        </div>
+        <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center;">Save Wash Package</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT CUSTOMER MODAL -->
+  <div class="modal-overlay" id="modal-add-customer">
+    <div class="modal-card">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="color: var(--text-main); font-family: var(--font-heading); text-transform: uppercase;"><i class="fa-solid fa-user-plus" style="color: var(--brand-orange);"></i> Add Customer Account</h3>
+        <button class="icon-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-create-customer">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Full Name</label>
+          <input type="text" id="cust-name" class="form-control" placeholder="Full Name" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Email Address</label>
+          <input type="email" id="cust-email" class="form-control" placeholder="customer@gmail.com" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Phone Number</label>
+          <input type="tel" id="cust-phone" class="form-control" placeholder="+91 XXXXX XXXXX" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center;">Save Customer Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT EMPLOYEE MODAL -->
+  <div class="modal-overlay" id="modal-add-employee">
+    <div class="modal-card">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="color: var(--text-main); font-family: var(--font-heading); text-transform: uppercase;"><i class="fa-solid fa-user-shield" style="color: var(--brand-orange);"></i> Add Mobile Van Employee</h3>
+        <button class="icon-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-create-employee">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Technician Name</label>
+          <input type="text" id="emp-name" class="form-control" placeholder="Technician Full Name" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Email Address</label>
+          <input type="email" id="emp-email" class="form-control" placeholder="tech@rudracarwash.com" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Phone Number</label>
+          <input type="tel" id="emp-phone" class="form-control" placeholder="+91 XXXXX XXXXX" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+        </div>
+        <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center;">Save Technician</button>
       </form>
     </div>
   </div>

@@ -1,6 +1,6 @@
 /* ==========================================================================
    RUDRA CAR WASH - ADMIN DASHBOARD ENGINE (FULL DYNAMIC PRODUCTION JS)
-   Fetches 100% Real Live PostgreSQL Data via Django REST APIs
+   100% Connected Real Live PostgreSQL APIs & Interactive Button Controls
    ========================================================================== */
 
 const STORAGE_KEYS_LOCAL = {
@@ -35,6 +35,7 @@ const API_BASE = window.location.origin.includes('http') && !window.location.ori
 // Dashboard State Store (Zero Hardcoded Data)
 const DashboardState = {
   activeTab: 'overview',
+  searchQuery: '',
   theme: localStorage.getItem('rudra_theme') || 'light',
   metrics: {
     totalUsers: 0,
@@ -63,6 +64,7 @@ const DashboardState = {
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
+  initSearchAndFilter();
   initModals();
   initLogout();
   fetchLiveApiData();
@@ -162,6 +164,19 @@ function switchTab(sectionId) {
   renderAllSections();
 }
 
+// Live Real-Time Search Input
+function initSearchAndFilter() {
+  const searchInput = document.querySelector('.search-box input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      DashboardState.searchQuery = e.target.value.trim().toLowerCase();
+      renderBookingsTable();
+      renderServicesGrid();
+      renderCustomersList();
+    });
+  }
+}
+
 // Live DRF API Synchronization
 async function fetchLiveApiData() {
   const token = localStorage.getItem('access_token');
@@ -206,22 +221,31 @@ async function fetchLiveApiData() {
       DashboardState.services = [];
     }
 
-    // 4. Fetch Customers
+    // 4. Fetch Customers & Employees
     const customersRes = await fetch(`${API_BASE}/accounts/users/`, { headers });
     if (customersRes.ok) {
       const customersData = await customersRes.json();
       const cList = Array.isArray(customersData) ? customersData : (customersData.results || []);
-      DashboardState.customers = cList.map(u => ({
+      DashboardState.customers = cList.filter(u => u.role !== 'admin').map(u => ({
         id: u.id,
         name: u.full_name || u.email || 'Customer',
         email: u.email || '',
         phone: u.phone || 'N/A',
         vehicle: u.vehicle_model || 'Registered Vehicle',
         bookingsCount: u.bookings_count || 1,
-        loyaltyPoints: u.loyalty_points || 50
+        loyaltyPoints: u.loyalty_points || 50,
+        role: u.role || 'customer'
+      }));
+      DashboardState.employees = cList.filter(u => u.role === 'employee' || u.is_staff).map(u => ({
+        id: u.id,
+        name: u.full_name || u.email || 'Technician',
+        email: u.email || '',
+        phone: u.phone || 'N/A',
+        role: 'Van Crew Lead'
       }));
     } else {
       DashboardState.customers = [];
+      DashboardState.employees = [];
     }
 
     // 5. Fetch Reviews
@@ -302,7 +326,6 @@ function renderAllSections() {
   renderOverviewKPIs();
   renderActivityStream();
   renderVanFleetStatus();
-  renderSlotOccupancyGrid();
   renderBookingsTable();
   renderServicesGrid();
   renderCustomersList();
@@ -435,55 +458,6 @@ function renderVanFleetStatus() {
   `).join('');
 }
 
-// Render Slot Occupancy Grid / Charts
-function renderSlotOccupancyGrid() {
-  const container = document.getElementById('slot-occupancy-container');
-  if (!container) return;
-
-  const timeSlots = [
-    "08:00 AM - 09:30 AM",
-    "09:30 AM - 11:00 AM",
-    "11:00 AM - 12:30 PM",
-    "02:00 PM - 03:30 PM",
-    "03:30 PM - 05:00 PM",
-    "05:00 PM - 06:30 PM"
-  ];
-
-  const bookings = DashboardState.bookings;
-  if (bookings.length === 0) {
-    container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem;"><i class="fa-solid fa-chart-line" style="font-size: 1.5rem; margin-bottom: 0.4rem; display: block; opacity: 0.5;"></i>No Data Available</div>`;
-    return;
-  }
-
-  let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem;">';
-  timeSlots.forEach(slotTime => {
-    const slotBookings = bookings.filter(b => (b.slot || '').includes(slotTime.split(' - ')[0]));
-    const isFull = slotBookings.length >= 2;
-    const countBadge = isFull 
-      ? '<span class="badge badge-cancelled">FULL (2/2)</span>' 
-      : `<span class="badge badge-confirmed">${slotBookings.length}/2 Booked</span>`;
-
-    html += `
-      <div class="card" style="padding: 1.1rem; margin-bottom: 0;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <strong style="font-size: 0.85rem; color: var(--text-main); font-family: var(--font-heading);"><i class="fa-solid fa-clock" style="color: var(--brand-orange); margin-right: 6px;"></i> ${slotTime}</strong>
-          ${countBadge}
-        </div>
-        <div style="display: flex; gap: 0.65rem;">
-          <div style="flex:1; padding: 0.65rem; border-radius: 8px; border: 1.5px dashed var(--border-color); text-align: center; font-size: 0.78rem; background: #FFFFFF;">
-            ${slotBookings[0] ? `<i class="fa-solid fa-car text-warning"></i><br><small>${slotBookings[0].vehicle}</small>` : '<span style="color: var(--text-subtle);">Available Slot</span>'}
-          </div>
-          <div style="flex:1; padding: 0.65rem; border-radius: 8px; border: 1.5px dashed var(--border-color); text-align: center; font-size: 0.78rem; background: #FFFFFF;">
-            ${slotBookings[1] ? `<i class="fa-solid fa-car text-warning"></i><br><small>${slotBookings[1].vehicle}</small>` : '<span style="color: var(--text-subtle);">Available Slot</span>'}
-          </div>
-        </div>
-      </div>
-    `;
-  });
-  html += '</div>';
-  container.innerHTML = html;
-}
-
 // Manual Payment Action Handlers for Admin
 window.approveBookingPayment = async function(rawId) {
   try {
@@ -533,25 +507,58 @@ window.rejectBookingPayment = async function(rawId) {
   }
 };
 
-function renderBookingsTable() {
-  const tbody = document.getElementById('bookings-table-tbody');
-  const fullTbody = document.getElementById('full-bookings-tbody');
-  
-  if (!tbody && !fullTbody) return;
+// Delete Booking Action
+window.deleteBooking = async function(rawId) {
+  if (!confirm(`Are you sure you want to delete Booking #${rawId}?`)) return;
 
-  if (DashboardState.bookings.length === 0) {
-    const emptyHTML = '<tr><td colspan="8" class="text-center p-4 text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.5rem; display: block;"></i>No Bookings Available</td></tr>';
-    if (tbody) tbody.innerHTML = emptyHTML;
-    if (fullTbody) fullTbody.innerHTML = emptyHTML;
+  try {
+    const token = localStorage.getItem('access_token');
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE}/bookings/${rawId}/`, {
+      method: 'DELETE',
+      headers: headers
+    });
+
+    if (res.status === 204 || res.ok) {
+      showToast(`Booking #${rawId} deleted successfully!`, 'success');
+      await fetchLiveApiData();
+    } else {
+      showToast(`Failed to delete booking #${rawId}.`, 'error');
+    }
+  } catch (e) {
+    showToast('Network error deleting booking.', 'error');
+  }
+};
+
+function renderBookingsTable() {
+  const fullTbody = document.getElementById('full-bookings-tbody');
+  if (!fullTbody) return;
+
+  const query = DashboardState.searchQuery;
+  let filteredBookings = DashboardState.bookings;
+
+  if (query) {
+    filteredBookings = filteredBookings.filter(b => 
+      b.id.toLowerCase().includes(query) ||
+      b.customer.toLowerCase().includes(query) ||
+      b.vehicle.toLowerCase().includes(query) ||
+      b.phone.toLowerCase().includes(query)
+    );
+  }
+
+  if (filteredBookings.length === 0) {
+    fullTbody.innerHTML = '<tr><td colspan="8" class="text-center p-4 text-muted" style="text-align: center; padding: 2rem;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.5rem; display: block;"></i>No Bookings Available</td></tr>';
     return;
   }
 
-  const rowsHTML = DashboardState.bookings.map(b => {
+  fullTbody.innerHTML = filteredBookings.map(b => {
     const rawId = b.raw_id || b.id.replace('RCW-', '');
     const isPaid = (b.payment_status || '').toUpperCase() === 'PAID';
     const isFailed = (b.payment_status || '').toUpperCase() === 'FAILED';
     
-    let payBadge = `<span class="badge badge-pending" style="font-size: 0.7rem;"><i class="fa-solid fa-clock-rotate-left"></i> Pending Verification</span>`;
+    let payBadge = `<span class="badge badge-pending" style="font-size: 0.7rem;"><i class="fa-solid fa-clock-rotate-left"></i> Pending</span>`;
     if (isPaid) {
       payBadge = `<span class="badge badge-completed" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Paid</span>`;
     } else if (isFailed) {
@@ -588,14 +595,12 @@ function renderBookingsTable() {
             <button class="btn btn-sm" style="background: #22c55e; color: #ffffff; border: none; padding: 3px 8px; font-size: 0.72rem; font-weight: 700;" onclick="approveBookingPayment('${rawId}')" title="Approve Payment"><i class="fa-solid fa-check"></i> Approve</button>
             <button class="btn btn-sm" style="background: #ef4444; color: #ffffff; border: none; padding: 3px 8px; font-size: 0.72rem; font-weight: 700;" onclick="rejectBookingPayment('${rawId}')" title="Reject Payment"><i class="fa-solid fa-xmark"></i> Reject</button>
             <button class="btn btn-secondary btn-sm" style="padding: 3px 8px;" onclick="showInvoicePrintModal('${b.id}')" title="Print Invoice"><i class="fa-solid fa-print"></i></button>
+            <button class="btn btn-secondary btn-sm" style="padding: 3px 8px; color: #dc2626;" onclick="deleteBooking('${rawId}')" title="Delete Booking"><i class="fa-solid fa-trash"></i></button>
           </div>
         </td>
       </tr>
     `;
   }).join('');
-
-  if (tbody) tbody.innerHTML = rowsHTML;
-  if (fullTbody) fullTbody.innerHTML = rowsHTML;
 }
 
 // Print Invoice Receipt from Admin
@@ -611,12 +616,18 @@ function renderServicesGrid() {
   const grid = document.getElementById('services-cards-grid');
   if (!grid) return;
 
-  if (DashboardState.services.length === 0) {
-    grid.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+  const query = DashboardState.searchQuery;
+  let servicesList = DashboardState.services;
+  if (query) {
+    servicesList = servicesList.filter(s => (s.name || s.title || '').toLowerCase().includes(query));
+  }
+
+  if (servicesList.length === 0) {
+    grid.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1; text-align: center; padding: 2rem;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Wash Packages Available</div>`;
     return;
   }
 
-  grid.innerHTML = DashboardState.services.map(s => `
+  grid.innerHTML = servicesList.map(s => `
     <div class="service-card">
       <div class="service-img-wrapper">
         <img src="${s.image || '../images/car 10.jpeg'}" alt="${s.name || s.title}">
@@ -628,8 +639,8 @@ function renderServicesGrid() {
         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
           <span style="font-size: 0.8rem; color: var(--brand-orange); font-weight: 700;"><i class="fa-solid fa-clock me-1"></i> ${s.duration ? `${s.duration} mins` : '45 mins'}</span>
           <div style="display: flex; gap: 0.5rem;">
-            <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-pen"></i></button>
-            <button class="btn btn-secondary btn-sm" style="color: var(--accent-red);"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn btn-secondary btn-sm" onclick="editService('${s.id}')" title="Edit Package"><i class="fa-solid fa-pen"></i> Edit</button>
+            <button class="btn btn-secondary btn-sm" style="color: var(--accent-red);" onclick="deleteService('${s.id}')" title="Delete Package"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
       </div>
@@ -637,26 +648,76 @@ function renderServicesGrid() {
   `).join('');
 }
 
+// Edit Service Action
+window.editService = function(serviceId) {
+  const s = DashboardState.services.find(x => String(x.id) === String(serviceId));
+  if (!s) return;
+
+  document.getElementById('service-edit-id').value = s.id;
+  document.getElementById('service-name').value = s.name || s.title || '';
+  document.getElementById('service-price').value = s.price || 400;
+  document.getElementById('service-duration').value = s.duration || 45;
+  document.getElementById('service-desc').value = s.description || '';
+  document.getElementById('modal-service-title').innerText = 'Edit Wash Package';
+
+  const modal = document.getElementById('modal-add-service');
+  if (modal) modal.classList.add('active');
+};
+
+// Delete Service Action
+window.deleteService = async function(serviceId) {
+  if (!confirm(`Are you sure you want to delete this Wash Package?`)) return;
+
+  try {
+    const token = localStorage.getItem('access_token');
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE}/services/${serviceId}/`, {
+      method: 'DELETE',
+      headers: headers
+    });
+
+    if (res.status === 204 || res.ok) {
+      showToast('Wash package deleted successfully!', 'success');
+      await fetchLiveApiData();
+    } else {
+      showToast('Failed to delete wash package.', 'error');
+    }
+  } catch (e) {
+    showToast('Network error deleting service.', 'error');
+  }
+};
+
 // Render Customers List
 function renderCustomersList() {
   const container = document.getElementById('customers-cards-grid');
   if (!container) return;
 
-  if (DashboardState.customers.length === 0) {
-    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+  const query = DashboardState.searchQuery;
+  let custList = DashboardState.customers;
+  if (query) {
+    custList = custList.filter(c => (c.name || '').toLowerCase().includes(query) || (c.phone || '').includes(query));
+  }
+
+  if (custList.length === 0) {
+    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1; text-align: center; padding: 2rem;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Customer Data Available</div>`;
     return;
   }
 
-  container.innerHTML = DashboardState.customers.map(c => `
+  container.innerHTML = custList.map(c => `
     <div class="card" style="padding: 1.1rem; margin-bottom: 0;">
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.85rem;">
-        <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--brand-orange-light); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: var(--font-heading); font-size: 1.1rem;">
-          ${(c.name || 'C').charAt(0).toUpperCase()}
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem;">
+        <div style="display: flex; align-items: center; gap: 0.85rem;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--brand-orange-light); color: var(--brand-orange); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: var(--font-heading); font-size: 1.1rem;">
+            ${(c.name || 'C').charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <h4 style="font-size: 0.95rem; margin-bottom: 2px; font-family: var(--font-heading);">${c.name}</h4>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">${c.phone || c.email}</span>
+          </div>
         </div>
-        <div>
-          <h4 style="font-size: 0.95rem; margin-bottom: 2px; font-family: var(--font-heading);">${c.name}</h4>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">${c.phone || c.email}</span>
-        </div>
+        <button class="btn btn-secondary btn-sm" style="color: var(--accent-red); padding: 4px 8px;" onclick="deleteCustomer('${c.id}')" title="Delete Account"><i class="fa-solid fa-trash"></i></button>
       </div>
       <div style="font-size: 0.82rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.65rem; display: flex; justify-content: space-between;">
         <span>Bookings: <strong>${c.bookingsCount || 1}</strong></span>
@@ -666,26 +727,52 @@ function renderCustomersList() {
   `).join('');
 }
 
+// Delete Customer Action
+window.deleteCustomer = async function(userId) {
+  if (!confirm(`Are you sure you want to delete this customer account?`)) return;
+
+  try {
+    const token = localStorage.getItem('access_token');
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE}/accounts/users/${userId}/`, {
+      method: 'DELETE',
+      headers: headers
+    });
+
+    if (res.status === 204 || res.ok) {
+      showToast('Customer account deleted successfully!', 'success');
+      await fetchLiveApiData();
+    } else {
+      showToast('Failed to delete customer account.', 'error');
+    }
+  } catch (e) {
+    showToast('Network error deleting user.', 'error');
+  }
+};
+
 // Render Employees List
 function renderEmployeesList() {
   const container = document.getElementById('employees-cards-grid');
   if (!container) return;
 
-  if (DashboardState.services.length === 0) {
-    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+  const empList = DashboardState.employees;
+  if (empList.length === 0) {
+    container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1; text-align: center; padding: 2rem;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Employee Data Available</div>`;
     return;
   }
 
-  container.innerHTML = DashboardState.services.map((s, idx) => `
+  container.innerHTML = empList.map((e, idx) => `
     <div class="card" style="padding: 1.1rem; margin-bottom: 0;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.65rem;">
-        <h4 style="font-size: 1rem; color: var(--text-main); font-family: var(--font-heading);">Van Crew Leader #${idx + 1}</h4>
+        <h4 style="font-size: 1rem; color: var(--text-main); font-family: var(--font-heading);">${e.name}</h4>
         <span class="badge badge-completed">On Duty</span>
       </div>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.65rem;">${s.name || 'Express Technician'}</p>
-      <div style="font-size: 0.8rem; border-top: 1px solid var(--border-color); padding-top: 0.65rem; display: flex; justify-content: space-between;">
-        <span>Station: <strong>Narasaraopet</strong></span>
-        <span style="color: var(--brand-orange); font-weight: 700;">Status: Active</span>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.65rem;">${e.email} | ${e.phone}</p>
+      <div style="font-size: 0.8rem; border-top: 1px solid var(--border-color); padding-top: 0.65rem; display: flex; justify-content: space-between; align-items: center;">
+        <span>Role: <strong>${e.role}</strong></span>
+        <button class="btn btn-secondary btn-sm" style="color: var(--accent-red); padding: 3px 6px;" onclick="deleteCustomer('${e.id}')" title="Delete Technician"><i class="fa-solid fa-trash"></i></button>
       </div>
     </div>
   `).join('');
@@ -697,7 +784,7 @@ function renderReviewsList() {
   if (!container) return;
 
   if (DashboardState.reviews.length === 0) {
-    container.innerHTML = `<div class="card p-4 text-center text-muted"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Data Available</div>`;
+    container.innerHTML = `<div class="card p-4 text-center text-muted" style="text-align: center; padding: 2rem;"><i class="fa-solid fa-folder-open mb-2 opacity-50" style="font-size: 1.8rem; display: block;"></i>No Reviews Available</div>`;
     return;
   }
 
@@ -705,12 +792,40 @@ function renderReviewsList() {
     <div class="card" style="padding: 1rem; margin-bottom: 0.75rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
         <strong style="font-family: var(--font-heading);">${r.customer_name || r.name || 'Customer'}</strong>
-        <span style="color: var(--brand-orange);">${'★'.repeat(r.rating || 5)}</span>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <span style="color: var(--brand-orange);">${'★'.repeat(r.rating || 5)}</span>
+          <button class="btn btn-secondary btn-sm" style="color: var(--accent-red); padding: 2px 6px;" onclick="deleteReview('${r.id}')" title="Delete Review"><i class="fa-solid fa-trash"></i></button>
+        </div>
       </div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0;">${r.comment || r.message || ''}</p>
     </div>
   `).join('');
 }
+
+// Delete Review Action
+window.deleteReview = async function(reviewId) {
+  if (!confirm(`Are you sure you want to delete this review?`)) return;
+
+  try {
+    const token = localStorage.getItem('access_token');
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE}/reviews/${reviewId}/`, {
+      method: 'DELETE',
+      headers: headers
+    });
+
+    if (res.status === 204 || res.ok) {
+      showToast('Review deleted successfully!', 'success');
+      await fetchLiveApiData();
+    } else {
+      showToast('Failed to delete review.', 'error');
+    }
+  } catch (e) {
+    showToast('Network error deleting review.', 'error');
+  }
+};
 
 // Helper: Booking Status Handler
 async function updateBookingStatus(id, newStatus) {
@@ -761,18 +876,42 @@ function showToast(msg, type = 'info') {
   }, 3500);
 }
 
-// Modals Controller
+// Modals Controller & All CRUD Form Handlers
 function initModals() {
   const btnAddBooking = document.getElementById('btn-add-booking');
-  const btnNewBookingTable = document.getElementById('btn-new-booking-table');
   const modalAddBooking = document.getElementById('modal-add-booking');
 
   if (btnAddBooking && modalAddBooking) {
     btnAddBooking.addEventListener('click', () => modalAddBooking.classList.add('active'));
   }
 
-  if (btnNewBookingTable && modalAddBooking) {
-    btnNewBookingTable.addEventListener('click', () => modalAddBooking.classList.add('active'));
+  const btnAddService = document.getElementById('btn-add-service');
+  const modalAddService = document.getElementById('modal-add-service');
+  if (btnAddService && modalAddService) {
+    btnAddService.addEventListener('click', () => {
+      document.getElementById('service-edit-id').value = '';
+      document.getElementById('modal-service-title').innerText = 'Add New Wash Package';
+      document.getElementById('form-create-service').reset();
+      modalAddService.classList.add('active');
+    });
+  }
+
+  const btnAddCustomer = document.getElementById('btn-add-customer');
+  const modalAddCustomer = document.getElementById('modal-add-customer');
+  if (btnAddCustomer && modalAddCustomer) {
+    btnAddCustomer.addEventListener('click', () => {
+      document.getElementById('form-create-customer').reset();
+      modalAddCustomer.classList.add('active');
+    });
+  }
+
+  const btnAddEmployee = document.getElementById('btn-add-employee');
+  const modalAddEmployee = document.getElementById('modal-add-employee');
+  if (btnAddEmployee && modalAddEmployee) {
+    btnAddEmployee.addEventListener('click', () => {
+      document.getElementById('form-create-employee').reset();
+      modalAddEmployee.classList.add('active');
+    });
   }
 
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
@@ -783,16 +922,16 @@ function initModals() {
     });
   });
 
+  // 1. Submit Create Booking Form
   const formBooking = document.getElementById('form-create-booking');
   if (formBooking) {
     formBooking.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const inputs = formBooking.querySelectorAll('input, select');
       const payload = {
-        full_name: inputs[0].value,
-        phone: inputs[1].value,
-        vehicle_model: inputs[2].value,
-        service: inputs[3].value,
+        full_name: document.getElementById('input-booking-name').value,
+        phone: document.getElementById('input-booking-phone').value,
+        vehicle_model: document.getElementById('input-booking-vehicle').value,
+        service: document.getElementById('select-booking-service').value || 1,
         vehicle_number: "AP 07 EV 100",
         address: "Narasaraopet",
         booking_date: new Date().toISOString().split('T')[0],
@@ -816,6 +955,116 @@ function initModals() {
         }
       } catch (err) {
         showToast('Network error creating booking.', 'error');
+      }
+    });
+  }
+
+  // 2. Submit Create / Edit Service Form
+  const formService = document.getElementById('form-create-service');
+  if (formService) {
+    formService.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('service-edit-id').value;
+      const payload = {
+        name: document.getElementById('service-name').value,
+        price: document.getElementById('service-price').value,
+        duration: document.getElementById('service-duration').value,
+        description: document.getElementById('service-desc').value
+      };
+
+      const url = editId ? `${API_BASE}/services/${editId}/` : `${API_BASE}/services/`;
+      const method = editId ? 'PATCH' : 'POST';
+
+      try {
+        const token = localStorage.getItem('access_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch(url, { method, headers, body: JSON.stringify(payload) });
+        if (res.ok) {
+          showToast(editId ? 'Wash Package Updated!' : 'New Wash Package Saved!', 'success');
+          if (modalAddService) modalAddService.classList.remove('active');
+          formService.reset();
+          await fetchLiveApiData();
+        } else {
+          showToast('Failed to save wash package.', 'error');
+        }
+      } catch (err) {
+        showToast('Network error saving service.', 'error');
+      }
+    });
+  }
+
+  // 3. Submit Create Customer Form
+  const formCustomer = document.getElementById('form-create-customer');
+  if (formCustomer) {
+    formCustomer.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        full_name: document.getElementById('cust-name').value,
+        email: document.getElementById('cust-email').value,
+        phone: document.getElementById('cust-phone').value,
+        role: 'customer'
+      };
+
+      try {
+        const token = localStorage.getItem('access_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch(`${API_BASE}/accounts/users/`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          showToast('Customer Account Created Successfully!', 'success');
+          if (modalAddCustomer) modalAddCustomer.classList.remove('active');
+          formCustomer.reset();
+          await fetchLiveApiData();
+        } else {
+          showToast('Failed to create customer account.', 'error');
+        }
+      } catch (err) {
+        showToast('Network error creating customer.', 'error');
+      }
+    });
+  }
+
+  // 4. Submit Create Employee Form
+  const formEmployee = document.getElementById('form-create-employee');
+  if (formEmployee) {
+    formEmployee.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        full_name: document.getElementById('emp-name').value,
+        email: document.getElementById('emp-email').value,
+        phone: document.getElementById('emp-phone').value,
+        role: 'employee'
+      };
+
+      try {
+        const token = localStorage.getItem('access_token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch(`${API_BASE}/accounts/users/`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          showToast('Technician Account Created Successfully!', 'success');
+          if (modalAddEmployee) modalAddEmployee.classList.remove('active');
+          formEmployee.reset();
+          await fetchLiveApiData();
+        } else {
+          showToast('Failed to create technician account.', 'error');
+        }
+      } catch (err) {
+        showToast('Network error creating employee.', 'error');
       }
     });
   }
