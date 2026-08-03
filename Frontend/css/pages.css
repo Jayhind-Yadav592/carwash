@@ -65,21 +65,8 @@
   color: var(--accent-yellow);
 }
 
-/* Pricing & Services Cards - Responsive & Center Aligned */
-.pricing-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0 !important;
-  background: #F8FAFC;
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
-}
-
-.service-card {
+/* Pricing & Services Cards - Responsive & Center Aligned (Identical to index.html) */
+.pricing-card, .service-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -125,16 +112,14 @@
   font-size: 0.75rem;
 }
 
-/* Premium Pricing Card Edge-to-Edge 16:9 Service Banner */
+/* Card Image Wrapper - Exactly as designed in index.html */
 .pricing-card-img-wrapper {
+  height: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 0.85rem;
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  background: #0A111F;
-  border-radius: 0;
 }
 
 .pricing-card-img-wrapper img {
@@ -146,40 +131,23 @@
   display: block;
 }
 
-.pricing-card-body {
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
-}
-
 /* Hover Zoom Effect - Desktop Only */
 @media (hover: hover) and (pointer: fine) {
   .pricing-card:hover .pricing-card-img-wrapper img,
   .pricing-card-img-wrapper:hover img {
-    transform: scale(1.06);
+    transform: scale(1.05);
   }
 }
 
-/* Mobile Devices Optimization (Smartphones & Tablets) */
-@media (max-width: 768px) {
-  .pricing-card-img-wrapper {
-    aspect-ratio: 16 / 9;
-    margin: 0;
-  }
-  .pricing-card-body {
-    padding: 1rem;
-  }
-}
-
+/* Mobile Devices Optimization (Identical to index.html on smartphones) */
 @media (max-width: 480px) {
-  .pricing-card-img-wrapper {
-    aspect-ratio: 16 / 9;
-    margin: 0;
+  .pricing-card, .service-card {
+    padding: 0.95rem;
   }
-  .pricing-card-body {
-    padding: 0.9rem;
+  .pricing-card-img-wrapper {
+    height: 160px;
+    border-radius: var(--radius-md);
+    margin-bottom: 0.75rem;
   }
 }
 
