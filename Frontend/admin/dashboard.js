@@ -627,25 +627,51 @@ function renderServicesGrid() {
     return;
   }
 
-  grid.innerHTML = servicesList.map(s => `
-    <div class="service-card">
-      <div class="service-img-wrapper">
-        <img src="${s.image || '../images/car 10.jpeg'}" alt="${s.name || s.title}">
-        <div class="service-price-tag">₹${s.price || 500}</div>
-      </div>
-      <div class="service-card-body">
-        <h4 style="margin-bottom: 0.4rem; color: var(--text-main); font-family: var(--font-heading);">${s.name || s.title}</h4>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${s.description || 'Premium doorstep express car wash.'}</p>
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
-          <span style="font-size: 0.8rem; color: var(--brand-orange); font-weight: 700;"><i class="fa-solid fa-clock me-1"></i> ${s.duration ? `${s.duration} mins` : '45 mins'}</span>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="btn btn-secondary btn-sm" onclick="editService('${s.id}')" title="Edit Package"><i class="fa-solid fa-pen"></i> Edit</button>
-            <button class="btn btn-secondary btn-sm" style="color: var(--accent-red);" onclick="deleteService('${s.id}')" title="Delete Package"><i class="fa-solid fa-trash"></i></button>
+  const defaultImageMap = [
+    '/images/car 10.jpeg',
+    '/images/car 12.png',
+    '/images/car 16.png'
+  ];
+  const fallbackImageMap = [
+    '../images/car 10.jpeg',
+    '../images/car 12.png',
+    '../images/car 16.png'
+  ];
+
+  grid.innerHTML = servicesList.map((s, idx) => {
+    let imgSrc = s.image;
+    if (!imgSrc || imgSrc.includes('placeholder') || imgSrc.includes('car 10.jpeg')) {
+      const imgName = (s.name || '').toLowerCase();
+      if (imgName.includes('complete') || imgName.includes('interior') || imgName.includes('polish')) {
+        imgSrc = '/images/car 16.png';
+      } else if (imgName.includes('vacuum')) {
+        imgSrc = '/images/car 12.png';
+      } else {
+        imgSrc = defaultImageMap[idx % defaultImageMap.length];
+      }
+    }
+    const fallbackSrc = fallbackImageMap[idx % fallbackImageMap.length];
+
+    return `
+      <div class="service-card">
+        <div class="service-img-wrapper">
+          <img src="${imgSrc}" onerror="this.onerror=null; this.src='${fallbackSrc}';" alt="${s.name || s.title}">
+          <div class="service-price-tag">₹${s.price || 500}</div>
+        </div>
+        <div class="service-card-body">
+          <h4 style="margin-bottom: 0.4rem; color: var(--text-main); font-family: var(--font-heading);">${s.name || s.title}</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${s.description || 'Premium doorstep express car wash.'}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+            <span style="font-size: 0.8rem; color: var(--brand-orange); font-weight: 700;"><i class="fa-solid fa-clock me-1"></i> ${s.duration ? `${s.duration} mins` : '45 mins'}</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="editService('${s.id}')" title="Edit Package"><i class="fa-solid fa-pen"></i> Edit</button>
+              <button class="btn btn-secondary btn-sm" style="color: var(--accent-red);" onclick="deleteService('${s.id}')" title="Delete Package"><i class="fa-solid fa-trash"></i></button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 // Edit Service Action
