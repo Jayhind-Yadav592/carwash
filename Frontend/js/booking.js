@@ -34,7 +34,7 @@ async function initBookingEngine() {
   dateInput.min = todayStr;
 
   const services = await Store.getServices();
-  let selectedPackage = services[0] || { id: 1, title: 'Standard Wash', price: 399 };
+  let selectedPackage = services[0] || { id: 'srv-foam-water', title: 'Foam & Water Wash', price: 399 };
 
   const urlParams = new URLSearchParams(window.location.search);
   const paramService = urlParams.get('service');
@@ -54,7 +54,7 @@ async function initBookingEngine() {
           const pkgId = card.getAttribute('data-pkg-id');
           const match = services.find(s => s.id.toString() === pkgId.toString()) || {
             id: pkgId,
-            price: parseFloat(card.getAttribute('data-price') || 400)
+            price: parseFloat(card.getAttribute('data-price') || 399)
           };
           selectedPackage = match;
           updateSelectedPackageUI();
@@ -231,11 +231,11 @@ async function initBookingEngine() {
       return;
     }
 
-    const custName = document.getElementById('cust-name')?.value || 'Customer';
+    const custName = document.getElementById('cust-name')?.value || '';
     const custPhone = document.getElementById('cust-phone')?.value || '';
-    const custEmail = document.getElementById('cust-email')?.value || `${custPhone}@rudracarwash.com`;
-    const custAddress = document.getElementById('cust-address')?.value || 'Narasaraopet';
-    const vehType = document.getElementById('veh-type')?.value || 'Sedan';
+    const custEmail = document.getElementById('cust-email')?.value || '';
+    const custAddress = document.getElementById('cust-address')?.value || '';
+    const vehType = document.getElementById('veh-type')?.value || '';
     const vehNo = document.getElementById('veh-no')?.value || '';
 
     if (window.validateName && !window.validateName(custName)) return;
@@ -296,7 +296,11 @@ async function initBookingEngine() {
         vehicleNo: vehNo.toUpperCase(),
         address: custAddress,
         date: dateInput.value,
-        slotTime: selectedSlotTime
+        slotTime: selectedSlotTime,
+        totalPrice: selectedPackage.price,
+        fullName: custName,
+        phone: custPhone,
+        email: custEmail
       });
       if (result.success) {
         showToast('Booking Successful! Redirecting to Payment...', 'success');

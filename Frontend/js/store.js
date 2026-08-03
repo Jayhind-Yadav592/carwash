@@ -94,13 +94,17 @@ const Store = {
       const headers = Auth.getAuthHeaders();
       const payload = {
         service: bookingData.serviceId,
-        vehicle_type: bookingData.vehicleType || 'Sedan',
+        full_name: bookingData.fullName,
+        phone: bookingData.phone,
+        email: bookingData.email,
+        vehicle_type: bookingData.vehicleType,
         vehicle_brand: bookingData.vehicleBrand || 'Brand',
-        vehicle_model: bookingData.vehicleModel || 'Model',
+        vehicle_model: bookingData.vehicleModel,
         vehicle_number: bookingData.vehicleNo,
         address: bookingData.address,
         booking_date: bookingData.date,
         booking_time: bookingData.slotTime,
+        total_price: bookingData.totalPrice,
         notes: bookingData.notes || ''
       };
 
