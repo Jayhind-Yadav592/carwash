@@ -117,10 +117,9 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  height: 200px;
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   box-shadow: 0 8px 24px rgba(10, 17, 31, 0.12);
   background: #0A111F;
 }
@@ -142,21 +141,21 @@
   }
 }
 
-/* Mobile & Tablet Responsiveness Optimization */
+/* Mobile Devices Optimization (Smartphones & Tablets) */
 @media (max-width: 768px) {
   .pricing-card-img-wrapper {
-    height: 175px;
-    border-radius: 16px;
-    margin-bottom: 1rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    margin-bottom: 0.85rem;
     box-shadow: 0 6px 18px rgba(10, 17, 31, 0.1);
   }
 }
 
 @media (max-width: 480px) {
   .pricing-card-img-wrapper {
-    height: 160px;
-    border-radius: 14px;
-    margin-bottom: 0.85rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
   }
 }
 
