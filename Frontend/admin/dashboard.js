@@ -652,11 +652,21 @@ function renderServicesGrid() {
     }
     const fallbackSrc = fallbackImageMap[idx % fallbackImageMap.length];
 
+    let priceFormatted = '400.00';
+    const sName = (s.name || s.title || '').toLowerCase();
+    if (sName.includes('complete') || sName.includes('interior') || sName.includes('tyre') || sName.includes('polish')) {
+      priceFormatted = '700.00';
+    } else if (sName.includes('vacuum')) {
+      priceFormatted = '600.00';
+    } else if (s.price) {
+      priceFormatted = parseFloat(s.price).toFixed(2);
+    }
+
     return `
       <div class="service-card">
         <div class="service-img-wrapper">
           <img src="${imgSrc}" onerror="this.onerror=null; this.src='${fallbackSrc}';" alt="${s.name || s.title}">
-          <div class="service-price-tag">₹${s.price || 500}</div>
+          <div class="service-price-tag">₹${priceFormatted}</div>
         </div>
         <div class="service-card-body">
           <h4 style="margin-bottom: 0.4rem; color: var(--text-main); font-family: var(--font-heading);">${s.name || s.title}</h4>
