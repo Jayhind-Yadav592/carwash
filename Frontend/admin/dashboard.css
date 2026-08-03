@@ -454,9 +454,27 @@ body.admin-body {
 
 /* Page Body Workspace */
 .page-container {
-  padding: calc(65px + 1.75rem) 2rem 1.75rem 2rem;
+  padding: calc(65px + 2rem) 2.25rem 2.5rem 2.25rem;
+  max-width: 1650px;
+  margin: 0 auto;
+  width: 100%;
   flex: 1;
   min-width: 0;
+}
+
+.tab-section {
+  animation: fadeInSection 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0.4;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Cards System */
@@ -464,7 +482,7 @@ body.admin-body {
   background: var(--primary-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.35rem;
+  padding: 1.5rem;
   box-shadow: var(--shadow-md);
   transition: var(--transition);
   margin-bottom: 1.5rem;

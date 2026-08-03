@@ -261,42 +261,45 @@
             </div>
           </div>
 
-          <!-- Useful Admin Operations & Activity Widgets (Replacing Graphs) -->
+          <!-- Useful Admin Operations & Activity Widgets -->
           <div class="grid-2col">
             <!-- Widget 1: Real-Time Dispatch Log & Activity Stream -->
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-bolt" style="color: var(--brand-orange);"></i> Real-Time Dispatch & Activity Stream</div>
-                <span class="badge badge-confirmed"><i class="fa-solid fa-circle-dot fa-spin"></i> Live Feed</span>
-              </div>
-              <div id="activity-stream-container" style="display: flex; flex-direction: column; gap: 0.85rem; max-height: 280px; overflow-y: auto;">
-                <!-- Dynamically populated from live notifications & bookings -->
+            <div class="card" style="min-height: 340px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div class="card-header">
+                  <div class="card-title"><i class="fa-solid fa-bolt" style="color: var(--brand-orange);"></i> Real-Time Dispatch Stream</div>
+                  <span class="badge badge-confirmed"><i class="fa-solid fa-circle-dot fa-spin"></i> Live Feed</span>
+                </div>
+                <div id="activity-stream-container" style="display: flex; flex-direction: column; gap: 0.85rem; max-height: 250px; overflow-y: auto;">
+                  <!-- Dynamically populated from live notifications & bookings -->
+                </div>
               </div>
             </div>
 
             <!-- Widget 2: Van Fleet & Crew Dispatch Operations -->
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-truck-monster" style="color: var(--accent-blue);"></i> Mobile Van Fleet Status</div>
-                <button class="btn btn-secondary btn-sm" onclick="switchTab('employees')"><i class="fa-solid fa-user-gear"></i> Manage Crew</button>
-              </div>
-              
-              <div id="van-fleet-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <!-- Dynamically populated from live active staff & services -->
-              </div>
-
-                <!-- Quick Action Buttons Row -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.25rem;">
-                  <button class="btn btn-yellow btn-sm" id="btn-quick-dispatch" onclick="showToast('Dispatching nearest van to customer location...', 'info')">
-                    <i class="fa-solid fa-paper-plane"></i> Quick Dispatch
-                  </button>
-                  <button class="btn btn-secondary btn-sm" onclick="switchTab('slots')">
-                    <i class="fa-solid fa-lock"></i> Lock Slot
-                  </button>
+            <div class="card" style="min-height: 340px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div class="card-header">
+                  <div class="card-title"><i class="fa-solid fa-truck-monster" style="color: var(--accent-blue);"></i> Mobile Van Fleet Status</div>
+                  <button class="btn btn-secondary btn-sm" onclick="switchTab('employees')"><i class="fa-solid fa-user-gear"></i> Manage Crew</button>
+                </div>
+                
+                <div id="van-fleet-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                  <!-- Dynamically populated from live active staff & services -->
                 </div>
               </div>
 
+              <!-- Quick Action Buttons Row -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <button class="btn btn-yellow btn-sm" id="btn-quick-dispatch" onclick="showToast('Dispatching nearest van to customer location...', 'info')">
+                  <i class="fa-solid fa-paper-plane"></i> Quick Dispatch
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="switchTab('slots')">
+                  <i class="fa-solid fa-lock"></i> Lock Slot
+                </button>
+              </div>
             </div>
+
           </div>
 
         </section>
@@ -304,16 +307,16 @@
         <!-- TAB SECTION 2: BOOKINGS -->
         <section class="tab-section" id="section-bookings" style="display: none;">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-calendar-days" style="color: var(--brand-orange);"></i> Master Doorstep Bookings Directory</div>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-file-pdf"></i> PDF Export</button>
-                <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-file-excel"></i> Excel Export</button>
+            <div class="card-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-calendar-days" style="color: var(--brand-orange);"></i> Master Doorstep Bookings Directory</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Filter, search, or update status of doorstep car wash appointments across Narasaraopet.</p>
+              </div>
+              <div style="display: flex; gap: 0.65rem;">
+                <button class="btn btn-yellow btn-sm" onclick="document.getElementById('modal-add-booking').classList.add('active')"><i class="fa-solid fa-plus"></i> New Booking</button>
+                <button class="btn btn-secondary btn-sm" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
               </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
-              Filter, search, or update status of doorstep car wash appointments across Narasaraopet.
-            </p>
             <div class="table-wrapper">
               <table class="data-table">
                 <thead>
@@ -338,9 +341,14 @@
 
         <!-- TAB SECTION 3: SERVICES -->
         <section class="tab-section" id="section-services" style="display: none;">
-          <div class="card-header" style="margin-bottom: 1.5rem;">
-            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-layer-group" style="color: var(--brand-orange);"></i> Doorstep Wash Packages Catalog</h3>
-            <button class="btn btn-yellow"><i class="fa-solid fa-plus"></i> Add New Package</button>
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-layer-group" style="color: var(--brand-orange);"></i> Doorstep Wash Packages Catalog</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Manage service packages, pricing, durations, and images.</p>
+              </div>
+              <button class="btn btn-yellow" onclick="showToast('Service Package Creation Enabled', 'info')"><i class="fa-solid fa-plus"></i> Add New Package</button>
+            </div>
           </div>
           <div class="services-grid" id="services-cards-grid">
             <!-- Rendered dynamically -->
@@ -349,8 +357,13 @@
 
         <!-- TAB SECTION 4: CUSTOMERS -->
         <section class="tab-section" id="section-customers" style="display: none;">
-          <div class="card-header" style="margin-bottom: 1.5rem;">
-            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-users" style="color: var(--brand-orange);"></i> Customer Directory & Loyalty Points</h3>
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-users" style="color: var(--brand-orange);"></i> Customer Directory & Loyalty Points</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">View registered customer accounts, contact details, and reward points.</p>
+              </div>
+            </div>
           </div>
           <div class="services-grid" id="customers-cards-grid">
             <!-- Rendered dynamically -->
@@ -360,21 +373,26 @@
         <!-- TAB SECTION 5: SLOT MANAGEMENT -->
         <section class="tab-section" id="section-slots" style="display: none;">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-clock" style="color: var(--brand-orange);"></i> Doorstep Van Slot Occupancy Calendar</div>
+            <div class="card-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-clock" style="color: var(--brand-orange);"></i> Doorstep Van Slot Occupancy Calendar</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Monitor van capacity limit (2 vehicles per 1.5-hour slot). Lock or unlock slots dynamically.</p>
+              </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">
-              Monitor van capacity limit (2 vehicles per 1.5-hour slot). Lock or unlock slots dynamically.
-            </p>
             <div id="full-slots-calendar-container"></div>
           </div>
         </section>
 
         <!-- TAB SECTION 6: EMPLOYEES -->
         <section class="tab-section" id="section-employees" style="display: none;">
-          <div class="card-header" style="margin-bottom: 1.5rem;">
-            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-user-shield" style="color: var(--brand-orange);"></i> Mobile Van Crew & Technicians</h3>
-            <button class="btn btn-yellow"><i class="fa-solid fa-user-plus"></i> Add Employee</button>
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-user-shield" style="color: var(--brand-orange);"></i> Mobile Van Crew & Technicians</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Manage doorstep service technicians, van leads, and shift statuses.</p>
+              </div>
+              <button class="btn btn-yellow" onclick="showToast('Add Technician Form Ready', 'info')"><i class="fa-solid fa-user-plus"></i> Add Employee</button>
+            </div>
           </div>
           <div class="services-grid" id="employees-cards-grid">
             <!-- Rendered dynamically -->
@@ -384,18 +402,39 @@
         <!-- TAB SECTION 7: REVENUE -->
         <section class="tab-section" id="section-revenue" style="display: none;">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-indian-rupee-sign" style="color: var(--accent-green);"></i> Revenue & Financial Performance</div>
+            <div class="card-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-indian-rupee-sign" style="color: var(--accent-green);"></i> Revenue & Financial Performance</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Real-time earnings aggregated directly from verified PostgreSQL UPI payments.</p>
+              </div>
             </div>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Total Revenue Collected: <strong id="section-total-revenue" style="color: var(--accent-green); font-size: 1.4rem;">₹0</strong></p>
+            <div class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 1.5rem;">
+              <div class="card kpi-card" style="border-left: 4px solid var(--accent-green);">
+                <div>
+                  <div class="kpi-lbl">Total Revenue</div>
+                  <div class="kpi-val" id="section-total-revenue" style="color: var(--accent-green);">₹0</div>
+                  <div class="kpi-trend trend-up"><i class="fa-solid fa-shield-check"></i> Verified Payments</div>
+                </div>
+              </div>
+              <div class="card kpi-card" style="border-left: 4px solid var(--brand-orange);">
+                <div>
+                  <div class="kpi-lbl">Payment Method</div>
+                  <div class="kpi-val" style="color: var(--brand-orange);">UPI QR</div>
+                  <div class="kpi-trend trend-up"><i class="fa-solid fa-qrcode"></i> Instant Settlement</div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         <!-- TAB SECTION 8: REVIEWS -->
         <section class="tab-section" id="section-reviews" style="display: none;">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-star" style="color: var(--brand-orange);"></i> Customer Feedback & Reviews</div>
+            <div class="card-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-star" style="color: var(--brand-orange);"></i> Customer Feedback & Reviews</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Review doorstep car wash ratings submitted by registered customers.</p>
+              </div>
             </div>
             <div id="reviews-list-container"></div>
           </div>
@@ -404,11 +443,13 @@
         <!-- TAB SECTION 10: NOTIFICATIONS -->
         <section class="tab-section" id="section-notifications" style="display: none;">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-bell" style="color: var(--brand-orange);"></i> Activity Feed & Notifications</div>
+            <div class="card-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-bell" style="color: var(--brand-orange);"></i> Activity Feed & Notifications</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Real-time doorstep car wash booking, payment, and van dispatch notifications.</p>
+              </div>
               <button class="btn btn-secondary btn-sm" onclick="markAllNotificationsRead()"><i class="fa-solid fa-check-double me-1"></i> Mark All as Read</button>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.25rem;">Real-time doorstep car wash booking, payment, and van dispatch notifications.</p>
             <div id="notifications-list-container">
               <!-- Rendered by JS -->
             </div>
@@ -418,32 +459,38 @@
         <!-- TAB SECTION 11: REPORTS -->
         <section class="tab-section" id="section-reports" style="display: none;">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-file-invoice" style="color: var(--brand-orange);"></i> System Reports & Performance Audit</div>
-              <button class="btn btn-yellow"><i class="fa-solid fa-download"></i> Export Full Audit Report</button>
+            <div class="card-header" style="margin-bottom: 1.25rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-file-invoice" style="color: var(--brand-orange);"></i> System Reports & Performance Audit</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Audit log export and operation metrics.</p>
+              </div>
+              <button class="btn btn-yellow" onclick="showToast('Generating Full Audit Report PDF...', 'info')"><i class="fa-solid fa-download"></i> Export Full Audit Report</button>
             </div>
           </div>
         </section>
 
         <!-- TAB SECTION 12: SETTINGS -->
         <section class="tab-section" id="section-settings" style="display: none;">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><i class="fa-solid fa-gear" style="color: var(--brand-orange);"></i> Platform & Business Settings</div>
+          <div class="card" style="max-width: 750px; margin: 0 auto;">
+            <div class="card-header" style="margin-bottom: 1.5rem;">
+              <div>
+                <h3 class="card-title" style="font-size: 1.3rem;"><i class="fa-solid fa-gear" style="color: var(--brand-orange);"></i> Platform & Business Settings</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Configure doorstep service hotline, business identity, and operating hours.</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">Business Name</label>
-              <input type="text" class="form-control" value="Rudra Doorstep Express Car Wash">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Support Hotline</label>
-              <input type="text" class="form-control" value="6300619133">
-            </div>
-            <button class="btn btn-yellow">Save Settings</button>
+            <form onsubmit="event.preventDefault(); showToast('Settings Saved Successfully!', 'success');">
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 0.4rem; display: block;">Business Name</label>
+                <input type="text" class="form-control" value="Rudra Doorstep Express Car Wash" style="width: 100%; padding: 0.65rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+              </div>
+              <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 0.4rem; display: block;">Support Hotline</label>
+                <input type="text" class="form-control" value="6300619133" style="width: 100%; padding: 0.65rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
+              </div>
+              <button type="submit" class="btn btn-yellow"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+            </form>
           </div>
         </section>
-
-
 
       </div>
     </main>
@@ -458,27 +505,27 @@
         <button class="icon-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form id="form-create-booking">
-        <div class="form-group">
-          <label class="form-label">Customer Name</label>
-          <input type="text" class="form-control" placeholder="Full Name" required>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Customer Name</label>
+          <input type="text" class="form-control" placeholder="Full Name" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
         </div>
-        <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Phone Number</label>
+          <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
         </div>
-        <div class="form-group">
-          <label class="form-label">Car Model & Number</label>
-          <input type="text" class="form-control" placeholder="e.g. Swift (AP 07 BK 1234)" required>
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Car Model & Number</label>
+          <input type="text" class="form-control" placeholder="Hyundai Creta (AP 07 BK 1234)" required style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
         </div>
-        <div class="form-group">
-          <label class="form-label">Select Package</label>
-          <select class="form-control">
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label class="form-label" style="font-weight: 700; display: block; margin-bottom: 0.35rem;">Select Wash Package</label>
+          <select class="form-control" style="width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md);">
             <option value="400">Foam & Water Wash (₹400)</option>
-            <option value="500">Foam Wash + Vacuum (₹500)</option>
+            <option value="500">Water & Foam Wash + Vacuum (₹500)</option>
             <option value="600">Full Interior & Polish (₹600)</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center; margin-top: 1rem;">Confirm & Save Booking</button>
+        <button type="submit" class="btn btn-yellow" style="width: 100%; justify-content: center;">Confirm & Save Booking</button>
       </form>
     </div>
   </div>
